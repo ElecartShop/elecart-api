@@ -1,0 +1,23 @@
+{
+  "name": "flex-api2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flex-dating/flex-api2.git"
+  },
+  "author": "Benjamin J. Young",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flex-dating/flex-api2/issues"
+  },
+  "homepage": "https://github.com/flex-dating/flex-api2#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
