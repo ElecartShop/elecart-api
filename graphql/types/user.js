@@ -11,6 +11,15 @@ module.exports = new GraphQLObjectType({
     },
     name: {
       type: GraphQLString
+    },
+    created: {
+      type: GraphQLString
+    },
+    modified: {
+      type: GraphQLString
+    },
+    deleted: {
+      type: GraphQLString
     }
   }
 });
