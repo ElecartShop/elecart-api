@@ -1,5 +1,5 @@
-var addUser = require('./user/add').add;
-var updateUser = require('./user/update').update;
+var addUser = require('./user/add');
+var updateUser = require('./user/update');
 
 module.exports = {
   addUser,

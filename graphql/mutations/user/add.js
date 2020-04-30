@@ -1,11 +1,11 @@
-
 var GraphQLNonNull = require('graphql').GraphQLNonNull;
 var GraphQLString = require('graphql').GraphQLString;
 var UserType = require('../../types/user');
 var UserModel = require('../../../models/user');
 
-exports.add = {
-  type: UserType.userType,
+module.exports = {
+  name: 'Mutation',
+  type: UserType,
   args: {
     name: {
       type: new GraphQLNonNull(GraphQLString),
