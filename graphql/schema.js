@@ -7,11 +7,45 @@ const GraphQLString = require('graphql').GraphQLString;
 const GraphQLList = require('graphql').GraphQLList;
 
 const basename = path.basename(__filename);
+var queries = {};
 var mutations = {};
+
+function single(object, type, model) {
+  return {
+    name: object,
+    type: type,
+    args: {
+      id: {
+        type: new GraphQLNonNull(GraphQLString)
+      }
+    },
+    resolve(root, params) {
+      const data = model.findById(params.id).exec();
+      if (!data) {
+        throw new Error('Error');
+      }
+      return data;
+    }
+  };
+}
+
+function many(object, type, model) {
+  return {
+    name: object+'s',
+    type: new GraphQLList(type),
+    resolve() {
+      const data = model.find({deleted: null}).exec();
+      if (!data) {
+        throw new Error('Error');
+      }
+      return data;
+    }
+  };
+}
 
 function create(object, type, model) {
   return {
-    name: 'Mutation',
+    name: object+'Create',
     type: type,
     args: {
       name: {
@@ -24,14 +58,14 @@ function create(object, type, model) {
       if (!data) {
         throw new Error('Error');
       }
-      return data
+      return data;
     }
   };
 }
 
 function update(object, type, model) {
   return {
-    name: 'Mutation',
+    name: object+'Update',
     type: type,
     args: {
       id: {
@@ -57,7 +91,7 @@ function update(object, type, model) {
 
 function remove(object, type, model) {
   return {
-    name: 'Mutation',
+    name: object+'Delete',
     type: type,
     args: {
       id: {
@@ -85,10 +119,16 @@ fs
     const object = file.slice(0, -3);
     const type = require('./types/'+object);
     const model = require('../models/'+object);
+    const objectType = new GraphQLObjectType(type);
 
-    mutations[object+'Create'] = create(object, type, model);
-    mutations[object+'Update'] = update(object, type, model);
-    mutations[object+'Delete'] = remove(object, type, model);
+    queries[object] = single(object, objectType, model);
+    if (!type.noMany) {
+      queries[object+'s'] = many(object, objectType, model);
+    }
+
+    mutations[object+'Create'] = create(object, objectType, model);
+    mutations[object+'Update'] = update(object, objectType, model);
+    mutations[object+'Delete'] = remove(object, objectType, model);
   });
 
-module.exports = mutations;
+module.exports = {queries, mutations};

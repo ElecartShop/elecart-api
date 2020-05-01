@@ -20,5 +20,5 @@ var schema = new Schema({
   }
 });
 
-var Model = mongoose.model('User', schema);
+var Model = mongoose.model('Customer', schema);
 module.exports = Model;

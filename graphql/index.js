@@ -1,7 +1,8 @@
-var GraphQLSchema = require('graphql').GraphQLSchema;
-var GraphQLObjectType = require('graphql').GraphQLObjectType;
-var queries = require('./queries');
-var mutations = require('./mutations');
+const GraphQLSchema = require('graphql').GraphQLSchema;
+const GraphQLObjectType = require('graphql').GraphQLObjectType;
+const schema = require('./schema');
+const queries = schema.queries;
+const mutations = schema.mutations;
 
 module.exports = new GraphQLSchema({
   query: new GraphQLObjectType({

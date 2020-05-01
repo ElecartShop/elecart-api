@@ -3,7 +3,7 @@ var GraphQLID = require('graphql').GraphQLID;
 var GraphQLString = require('graphql').GraphQLString;
 
 module.exports = {
-  name: 'user',
+  name: 'customer',
   fields: {
     id: {
       type: new GraphQLNonNull(GraphQLID)
