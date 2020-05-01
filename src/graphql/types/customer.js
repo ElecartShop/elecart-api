@@ -1,6 +1,6 @@
-var GraphQLNonNull = require('graphql').GraphQLNonNull;
-var GraphQLID = require('graphql').GraphQLID;
-var GraphQLString = require('graphql').GraphQLString;
+const GraphQLNonNull = require('graphql').GraphQLNonNull;
+const GraphQLID = require('graphql').GraphQLID;
+const GraphQLString = require('graphql').GraphQLString;
 
 module.exports = {
   name: 'customer',

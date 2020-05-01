@@ -6,6 +6,25 @@ var schema = new Schema({
     type: String,
     required: true
   },
+  account_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Account',
+    required: true
+  },
+  users: [{
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    }
+  }],
+  groups: [{
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Group',
+      required: true
+    }
+  }],
   created: {
     type: Date,
     default: Date.now

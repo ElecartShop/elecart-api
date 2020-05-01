@@ -6,6 +6,22 @@ var schema = new Schema({
     type: String,
     required: true
   },
+  shop_id: {
+    type: String,
+    required: true
+  },
+  visitor_id: {
+    type: String,
+    required: true
+  },
+  customer_id: {
+    type: String,
+    required: false
+  },
+  coupon_id: {
+    type: String,
+    required: false
+  },
   created: {
     type: Date,
     default: Date.now
@@ -20,5 +36,5 @@ var schema = new Schema({
   }
 });
 
-var Model = mongoose.model('Customer', schema);
+var Model = mongoose.model('Order', schema);
 module.exports = Model;
