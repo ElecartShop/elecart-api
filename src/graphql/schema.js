@@ -1,41 +1,45 @@
+const grapqlCompose = require('graphql-compose');
+const schemaComposer = new grapqlCompose.SchemaComposer();
+
 const fs = require('fs');
 const path = require('path');
-
-const GraphQLNonNull = require('graphql').GraphQLNonNull;
-const GraphQLObjectType = require('graphql').GraphQLObjectType;
-const GraphQLString = require('graphql').GraphQLString;
-const GraphQLList = require('graphql').GraphQLList;
 
 const basename = path.basename(__filename);
 var queries = {};
 var mutations = {};
 
 fs
-  .readdirSync(__dirname+'/types')
+  .readdirSync(__dirname+'/../models')
   .filter(file => {
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
   })
   .forEach(file => {
-    var schemaClass;
-    if (fs.existsSync('schemas/'+file)) {
-      schemaClass = require('./schemas/'+file);
-    } else {
-      schemaClass = require('./schemas/index');
-    }
-
     const object = file.slice(0, -3);
-    const type = require('./types/'+object);
-    const model = require('../models/'+object);
-    const objectType = new GraphQLObjectType(type);
+    const {Model, ModelTC} = require('../models/'+object);
 
-    queries[object] = schemaClass.single(object, objectType, model);
-    if (!type.noMany) {
-      queries[object+'s'] = schemaClass.many(object, objectType, model);
-    }
+    const queries = {
+      [object+'ById']: ModelTC.getResolver('findById'),
+      [object+'ByIds']: ModelTC.getResolver('findByIds'),
+      [object+'One']: ModelTC.getResolver('findOne'),
+      [object+'Many']: ModelTC.getResolver('findMany'),
+      [object+'Count']: ModelTC.getResolver('count'),
+      [object+'Connection']: ModelTC.getResolver('connection'),
+      [object+'Pagination']: ModelTC.getResolver('pagination'),
+    };
 
-    mutations[object+'Create'] = schemaClass.create(object, objectType, model);
-    mutations[object+'Update'] = schemaClass.update(object, objectType, model);
-    mutations[object+'Delete'] = schemaClass.remove(object, objectType, model);
+    const mutations = {
+        [object+'CreateOne']: ModelTC.getResolver('createOne'),
+        [object+'CreateMany']: ModelTC.getResolver('createMany'),
+        [object+'UpdateById']: ModelTC.getResolver('updateById'),
+        [object+'UpdateOne']: ModelTC.getResolver('updateOne'),
+        [object+'UpdateMan']: ModelTC.getResolver('updateMany'),
+        [object+'RemoveById']: ModelTC.getResolver('removeById'),
+        [object+'RemoveOne']: ModelTC.getResolver('removeOne'),
+        [object+'RemoveMany']: ModelTC.getResolver('removeMany'),
+    };
+
+    schemaComposer.Query.addFields(queries);
+    schemaComposer.Mutation.addFields(mutations);
   });
 
-module.exports = {queries, mutations};
+module.exports = schemaComposer.buildSchema();

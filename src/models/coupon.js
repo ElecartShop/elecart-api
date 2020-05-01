@@ -1,5 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
+const Schema = mongoose.Schema;
 
 var schema = new Schema({
   name: {
@@ -7,7 +8,8 @@ var schema = new Schema({
     required: true
   },
   shop_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Shop',
     required: true
   },
   created: {
@@ -24,5 +26,20 @@ var schema = new Schema({
   }
 });
 
-var Model = mongoose.model('Coupon', schema);
-module.exports = Model;
+module.exports = {};
+module.exports.Model = mongoose.model('Coupon', schema);
+
+var ModelTC = new composeWithMongoose(module.exports.Model);
+
+const shop = require('./shop');
+ModelTC.addRelation('shop', {
+  resolver: () => shop.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ id: source.shop_id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { shop_id: true },
+});
+
+module.exports.ModelTC = ModelTC;

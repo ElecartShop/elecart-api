@@ -1,5 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
+const Schema = mongoose.Schema;
 
 var schema = new Schema({
   name: {
@@ -7,14 +8,23 @@ var schema = new Schema({
     required: true
   },
   account_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Account',
     required: true
   },
   users: [{
     id: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       required: true
-    }
+    },
+  }],
+  shops: [{
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Shop',
+      required: true
+    },
   }],
   created: {
     type: Date,
@@ -30,5 +40,42 @@ var schema = new Schema({
   }
 });
 
-var Model = mongoose.model('Group', schema);
-module.exports = Model;
+module.exports = {};
+module.exports.Model = mongoose.model('Group', schema);
+
+var ModelTC = new composeWithMongoose(module.exports.Model);
+
+const account = require('./account');
+ModelTC.addRelation('account', {
+  resolver: () => account.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ id: source.account_id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { account_id: true },
+});
+
+const user = require('./user');
+ModelTC.addRelation('users', {
+  resolver: () => user.ModelTC.getResolver('findMany'),
+  prepareArgs: {
+    filter: (source) => ({ account_id: source.id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { users: true },
+});
+
+const shop = require('./shop');
+ModelTC.addRelation('shops', {
+  resolver: () => shop.ModelTC.getResolver('findMany'),
+  prepareArgs: {
+    filter: (source) => ({ account_id: source.id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { shops: true },
+});
+
+module.exports.ModelTC = ModelTC;

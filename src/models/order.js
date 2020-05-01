@@ -1,5 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
+const Schema = mongoose.Schema;
 
 var schema = new Schema({
   name: {
@@ -7,19 +8,33 @@ var schema = new Schema({
     required: true
   },
   shop_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Shop',
     required: true
   },
   visitor_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Visitor',
     required: true
   },
   customer_id: {
-    type: String,
-    required: false
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Customer',
+    required: true
   },
   coupon_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Coupon',
+    required: false
+  },
+  processor_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Processor',
+    required: false
+  },
+  shipper_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Shipper',
     required: false
   },
   created: {
@@ -36,5 +51,75 @@ var schema = new Schema({
   }
 });
 
-var Model = mongoose.model('Order', schema);
-module.exports = Model;
+module.exports = {};
+module.exports.Model = mongoose.model('Order', schema);
+
+var ModelTC = new composeWithMongoose(module.exports.Model);
+
+const shop = require('./shop');
+ModelTC.addRelation('shop', {
+  resolver: () => shop.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ id: source.shop_id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { shop_id: true },
+});
+
+const visitor = require('./visitor');
+ModelTC.addRelation('visitor', {
+  resolver: () => visitor.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ id: source.visitor_id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { visitor_id: true },
+});
+
+const customer = require('./customer');
+ModelTC.addRelation('customer', {
+  resolver: () => customer.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ id: source.customer_id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { customer_id: true },
+});
+
+const coupon = require('./coupon');
+ModelTC.addRelation('coupon', {
+  resolver: () => coupon.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ id: source.coupon_id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { coupon_id: true },
+});
+
+const processor = require('./processor');
+ModelTC.addRelation('processor', {
+  resolver: () => processor.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ id: source.processor_id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { processor_id: true },
+});
+
+const shipper = require('./shipper');
+ModelTC.addRelation('shipper', {
+  resolver: () => shipper.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ id: source.shipper_id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { shipper_id: true },
+});
+
+module.exports.ModelTC = ModelTC;
