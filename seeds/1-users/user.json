@@ -13,7 +13,10 @@
   },
   {
     "_id": { "$oid": "5eaca7615f443a2fde719016"},
-    "name": "ShopUser"
+    "name": "ShopUser",
+    "users": [
+      { "$oid": "5eaca956943bfa4faab04d3d" }
+    ]
   },
   {
     "_id": { "$oid": "5eaca78a13263017a3e443df"},

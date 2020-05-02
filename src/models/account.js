@@ -7,13 +7,11 @@ var schema = new Schema({
     type: String,
     required: true
   },
-  users: [{
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true
-    }
-  }],
+  user_ids: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'User',
+    required: true
+  },
   owner_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

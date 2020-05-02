@@ -12,20 +12,11 @@ var schema = new Schema({
     ref: 'Account',
     required: true
   },
-  users: [{
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true
-    },
-  }],
-  /*shops: [{
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Shop',
-      required: true
-    },
-  }],*/
+  user_ids: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'User',
+    required: true
+  },
   created: {
     type: Date,
     default: Date.now
