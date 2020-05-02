@@ -1,8 +1,8 @@
 module.exports = {
     development: {
-        db: 'mongodb://database/flex',
+        db: 'mongodb://database/elecart',
         app: {
-            name: 'flex-api2'
+            name: 'elecart-api'
         }
     }
 };

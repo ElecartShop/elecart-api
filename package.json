@@ -1,11 +1,11 @@
 {
-  "name": "flex-api2",
+  "name": "elecart-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "npx babel src --out-dir dist",
-    "seed": "npx seed -u mongodb://127.0.0.1:27017/flex --drop-database ./seeds",
+    "seed": "npx seed -u mongodb://127.0.0.1:27017/elecart --drop-database ./seeds",
     "start": "node dist/index.js",
     "dev": "npx nodemon --legacy-watch src/index.js",
     "prettier": "npx prettier --config ./.prettierrc --write \"**/*.js\"",
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/flex-dating/flex-api2.git"
+    "url": "git+https://github.com/ElecartShop/elecart-api.git"
   },
   "author": "Benjamin J. Young",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/flex-dating/flex-api2/issues"
+    "url": "https://github.com/ElecartShop/elecart-api/issues"
   },
-  "homepage": "https://github.com/flex-dating/flex-api2#readme",
+  "homepage": "https://github.com/ElecartShop/elecart-api#readme",
   "dependencies": {
     "apollo-engine": "^1.1.2",
     "apollo-server-express": "^2.12.0",
