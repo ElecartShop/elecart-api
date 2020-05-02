@@ -12,9 +12,9 @@ var schema = new Schema({
     ref: 'Shop',
     required: true
   },
-  parent_id: {
+  product_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
+    ref: 'Product',
     required: true
   },
   created: {
@@ -29,10 +29,12 @@ var schema = new Schema({
     type: Date,
     required: false
   }
+}, {
+  collection: 'productImages'
 });
 
 module.exports = {};
-module.exports.Model = mongoose.model('Category', schema);
+module.exports.Model = mongoose.model('ProductImage', schema);
 
 var ModelTC = new composeWithMongoose(module.exports.Model);
 
@@ -47,15 +49,15 @@ ModelTC.addRelation('shop', {
   projection: { shop_id: true },
 });
 
-const category = require('./category');
-ModelTC.addRelation('parent', {
-  resolver: () => category.ModelTC.getResolver('findOne'),
+const product = require('./product');
+ModelTC.addRelation('product', {
+  resolver: () => product.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ _id: source.parent_id }),
+    filter: (source) => ({ _id: source.product_id }),
     skip: null,
     sort: null,
   },
-  projection: { parent: true },
+  projection: { product_id: true },
 });
 
 module.exports.ModelTC = ModelTC;

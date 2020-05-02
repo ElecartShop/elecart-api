@@ -1,0 +1,17 @@
+[
+  {
+    "_id": { "$oid": "5ead81fba3c51d92e079989c"},
+    "name": "My Category 1",
+    "shop_id": { "$oid": "5eaca956943bfa4faab04d3d"}
+  },
+  {
+    "_id": { "$oid": "5ead82002c6047bd7f453eeb"},
+    "name": "My Category 2",
+    "shop_id": { "$oid": "5eaca956943bfa4faab04d3d"}
+  },
+  {
+    "_id": { "$oid": "5ead8206b2bad4b35af2bae9"},
+    "name": "Not My Category 1",
+    "shop_id": { "$oid": "5eacabcd7142076dc7acc432"}
+  }
+]

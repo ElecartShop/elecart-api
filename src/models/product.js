@@ -42,4 +42,15 @@ ModelTC.addRelation('shop', {
   projection: { shop_id: true },
 });
 
+const productImage = require('./productImage');
+ModelTC.addRelation('productImages', {
+  resolver: () => productImage.ModelTC.getResolver('findMany'),
+  prepareArgs: {
+    filter: (source) => ({ product_id: source.id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { productImages: true },
+});
+
 module.exports.ModelTC = ModelTC;

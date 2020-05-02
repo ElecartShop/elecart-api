@@ -82,6 +82,17 @@ ModelTC.addRelation('groups', {
   projection: { groups: true },
 });
 
+const category = require('./category');
+ModelTC.addRelation('categories', {
+  resolver: () => category.ModelTC.getResolver('findMany'),
+  prepareArgs: {
+    filter: (source) => ({ shop_id: source.id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { categories: true },
+});
+
 const product = require('./product');
 ModelTC.addRelation('products', {
   resolver: () => product.ModelTC.getResolver('findMany'),
