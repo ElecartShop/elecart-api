@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx babel src --out-dir dist",
+    "seed": "npx seed -u mongodb://127.0.0.1:27017/flex --drop-database ./seeds",
     "start": "node dist/index.js",
     "dev": "npx nodemon --legacy-watch src/index.js",
     "prettier": "npx prettier --config ./.prettierrc --write \"**/*.js\"",

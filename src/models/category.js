@@ -12,7 +12,7 @@ var schema = new Schema({
     ref: 'Shop',
     required: true
   },
-  parent: {
+  parent_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
     required: true
@@ -40,7 +40,7 @@ const customer = require('./customer');
 ModelTC.addRelation('customer', {
   resolver: () => customer.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.customer_id }),
+    filter: (source) => ({ _id: source.customer_id }),
     skip: null,
     sort: null,
   },
@@ -48,10 +48,10 @@ ModelTC.addRelation('customer', {
 });
 
 const category = require('./category');
-ModelTC.addRelation('category', {
+ModelTC.addRelation('parent', {
   resolver: () => category.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.parent }),
+    filter: (source) => ({ _id: source.parent_id }),
     skip: null,
     sort: null,
   },

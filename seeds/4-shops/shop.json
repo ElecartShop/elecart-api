@@ -1,0 +1,34 @@
+[
+  {
+    "_id": { "$oid": "5eaca956943bfa4faab04d3d"},
+    "name": "My Shop",
+    "account_id": { "$oid": "5eac143ed8732a0994d8f803"},
+    "users": [
+      {"_id": { "$oid": "5eaca7615f443a2fde719016"}}
+    ]
+  },
+  {
+    "_id": { "$oid": "5eaca95a922561696adcb48f"},
+    "name": "My Other Shop",
+    "account_id": { "$oid": "5eac143ed8732a0994d8f803"},
+    "groups": [
+      {"_id": { "$oid": "5eaca8e1b55058a935e9788b"}}
+    ]
+  },
+  {
+    "_id": { "$oid": "5eaca95ff8cc6fdb225dfdbd"},
+    "name": "My Other Account Shop",
+    "account_id": { "$oid": "5eac57783327f1001f3a89f7"}
+  },
+  {
+    "_id": { "$oid": "5eacabcd7142076dc7acc432"},
+    "name": "Not My Shop",
+    "account_id": { "$oid": "5eacab4e0627e547fbe0982e"},
+    "users": [
+      {"_id": { "$oid": "5eaca7caf9f583d944ac4afc"}}
+    ],
+    "groups": [
+      {"_id": { "$oid": "5eaca8e61697daa31683b400"}}
+    ]
+  }
+]

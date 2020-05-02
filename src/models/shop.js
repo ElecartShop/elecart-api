@@ -49,7 +49,7 @@ const account = require('./account');
 ModelTC.addRelation('account', {
   resolver: () => account.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.account_id }),
+    filter: (source) => ({ _id: source.account_id }),
     skip: null,
     sort: null,
   },

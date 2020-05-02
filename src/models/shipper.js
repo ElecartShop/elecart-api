@@ -35,7 +35,7 @@ const shop = require('./shop');
 ModelTC.addRelation('shop', {
   resolver: () => shop.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.shop_id }),
+    filter: (source) => ({ _id: source.shop_id }),
     skip: null,
     sort: null,
   },

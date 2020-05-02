@@ -60,7 +60,7 @@ const shop = require('./shop');
 ModelTC.addRelation('shop', {
   resolver: () => shop.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.shop_id }),
+    filter: (source) => ({ _id: source.shop_id }),
     skip: null,
     sort: null,
   },
@@ -71,7 +71,7 @@ const visitor = require('./visitor');
 ModelTC.addRelation('visitor', {
   resolver: () => visitor.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.visitor_id }),
+    filter: (source) => ({ _id: source.visitor_id }),
     skip: null,
     sort: null,
   },
@@ -82,7 +82,7 @@ const customer = require('./customer');
 ModelTC.addRelation('customer', {
   resolver: () => customer.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.customer_id }),
+    filter: (source) => ({ _id: source.customer_id }),
     skip: null,
     sort: null,
   },
@@ -93,7 +93,7 @@ const coupon = require('./coupon');
 ModelTC.addRelation('coupon', {
   resolver: () => coupon.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.coupon_id }),
+    filter: (source) => ({ _id: source.coupon_id }),
     skip: null,
     sort: null,
   },
@@ -104,7 +104,7 @@ const processor = require('./processor');
 ModelTC.addRelation('processor', {
   resolver: () => processor.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.processor_id }),
+    filter: (source) => ({ _id: source.processor_id }),
     skip: null,
     sort: null,
   },
@@ -115,7 +115,7 @@ const shipper = require('./shipper');
 ModelTC.addRelation('shipper', {
   resolver: () => shipper.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.shipper_id }),
+    filter: (source) => ({ _id: source.shipper_id }),
     skip: null,
     sort: null,
   },

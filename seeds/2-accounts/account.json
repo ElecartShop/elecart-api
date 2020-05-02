@@ -1,0 +1,27 @@
+[
+  {
+    "_id": { "$oid": "5eac143ed8732a0994d8f803"},
+    "name": "My Account",
+    "owner_id": { "$oid": "5eaca52c6e49885a5bdae193"},
+    "users": [
+      {"_id": { "$oid": "5eaca52c6e49885a5bdae193"}},
+      {"_id": { "$oid": "5eaca53198ade06e86fe821d"}}
+    ]
+  },
+  {
+    "_id": { "$oid": "5eac57783327f1001f3a89f7"},
+    "name": "My Other Account",
+    "owner_id": { "$oid": "5eaca52c6e49885a5bdae193"},
+    "users": [
+      {"_id": { "$oid": "5eaca52c6e49885a5bdae193"}}
+    ]
+  },
+  {
+    "_id": { "$oid": "5eacab4e0627e547fbe0982e"},
+    "name": "Not My Account",
+    "owner_id": { "$oid": "5eaca78a13263017a3e443df"},
+    "users": [
+      {"_id": { "$oid": "5eaca78a13263017a3e443df"}}
+    ]
+  }
+]

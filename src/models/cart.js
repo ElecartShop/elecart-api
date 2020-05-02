@@ -45,7 +45,7 @@ const shop = require('./shop');
 ModelTC.addRelation('shop', {
   resolver: () => shop.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.shop_id }),
+    filter: (source) => ({ _id: source.shop_id }),
     skip: null,
     sort: null,
   },
@@ -56,7 +56,7 @@ const visitor = require('./visitor');
 ModelTC.addRelation('visitor', {
   resolver: () => visitor.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.visitor_id }),
+    filter: (source) => ({ _id: source.visitor_id }),
     skip: null,
     sort: null,
   },
@@ -67,7 +67,7 @@ const customer = require('./customer');
 ModelTC.addRelation('customer', {
   resolver: () => customer.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.customer_id }),
+    filter: (source) => ({ _id: source.customer_id }),
     skip: null,
     sort: null,
   },

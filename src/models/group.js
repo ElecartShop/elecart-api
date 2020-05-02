@@ -19,13 +19,13 @@ var schema = new Schema({
       required: true
     },
   }],
-  shops: [{
+  /*shops: [{
     id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Shop',
       required: true
     },
-  }],
+  }],*/
   created: {
     type: Date,
     default: Date.now
@@ -49,7 +49,7 @@ const account = require('./account');
 ModelTC.addRelation('account', {
   resolver: () => account.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ id: source.account_id }),
+    filter: (source) => ({ _id: source.account_id }),
     skip: null,
     sort: null,
   },
@@ -67,7 +67,7 @@ ModelTC.addRelation('users', {
   projection: { users: true },
 });
 
-const shop = require('./shop');
+/*const shop = require('./shop');
 ModelTC.addRelation('shops', {
   resolver: () => shop.ModelTC.getResolver('findMany'),
   prepareArgs: {
@@ -76,6 +76,6 @@ ModelTC.addRelation('shops', {
     sort: null,
   },
   projection: { shops: true },
-});
+});*/
 
 module.exports.ModelTC = ModelTC;

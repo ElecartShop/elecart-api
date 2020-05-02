@@ -12,12 +12,13 @@ var schema = new Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true
-    },
-    owner: {
-      type: Boolean,
-      required: false
     }
   }],
+  owner_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
   created: {
     type: Date,
     default: Date.now
@@ -46,6 +47,16 @@ ModelTC.addRelation('users', {
     sort: null,
   },
   projection: { users: true },
+});
+
+ModelTC.addRelation('owner', {
+  resolver: () => user.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ _id: source.owner_id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { owner: true },
 });
 
 const shop = require('./shop');

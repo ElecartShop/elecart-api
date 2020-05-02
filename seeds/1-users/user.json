@@ -1,0 +1,30 @@
+[
+  {
+    "_id": { "$oid": "5eaca52c6e49885a5bdae193"},
+    "name": "MyUser"
+  },
+  {
+    "_id": { "$oid": "5eaca53198ade06e86fe821d"},
+    "name": "NotMyUser"
+  },
+  {
+    "_id": { "$oid": "5eaca58e0c37f8476fb29e55"},
+    "name": "GroupUser"
+  },
+  {
+    "_id": { "$oid": "5eaca7615f443a2fde719016"},
+    "name": "ShopUser"
+  },
+  {
+    "_id": { "$oid": "5eaca78a13263017a3e443df"},
+    "name": "OutsideUser"
+  },
+  {
+    "_id": { "$oid": "5eaca7bb12081f8598567732"},
+    "name": "OutsideGroupUser"
+  },
+  {
+    "_id": { "$oid": "5eaca7caf9f583d944ac4afc"},
+    "name": "OutsideShopUser"
+  }
+]

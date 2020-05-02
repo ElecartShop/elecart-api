@@ -1,0 +1,16 @@
+[
+  {
+    "_id": { "$oid": "5eaca8e1b55058a935e9788b"},
+    "name": "My Group",
+    "users": [
+      {"_id": { "$oid": "5eaca58e0c37f8476fb29e55"}}
+    ]
+  },
+  {
+    "_id": { "$oid": "5eaca8e61697daa31683b400"},
+    "name": "Not My Group",
+    "users": [
+      {"_id": { "$oid": "5eaca7bb12081f8598567732"}}
+    ]
+  }
+]

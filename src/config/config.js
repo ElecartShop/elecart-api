@@ -1,6 +1,6 @@
 module.exports = {
     development: {
-        db: 'mongodb://database',
+        db: 'mongodb://database/flex',
         app: {
             name: 'flex-api2'
         }
