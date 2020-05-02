@@ -14,6 +14,6 @@ app.use('/', cors(), graphqlHTTP({
   graphiql: true
 }));
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log('A GraphQL API running at port 3000');
+app.listen(process.env.PORT || 4000, () => {
+  console.log('A GraphQL API running at port 4000');
 });

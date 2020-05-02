@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx babel src --out-dir dist",
-    "seed": "npx seed -u mongodb://127.0.0.1:27017/elecart --drop-database ./seeds",
+    "seed": "npx mongo-seeding-cli -u mongodb://127.0.0.1:27017/elecart --drop-database ./seeds",
     "start": "node dist/index.js",
     "dev": "npx nodemon --legacy-watch src/index.js",
     "prettier": "npx prettier --config ./.prettierrc --write \"**/*.js\"",
@@ -54,6 +54,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "fs-extra": "^9.0.0",
+    "mongo-seeding": "^3.4.1",
     "nodemon": "^2.0.3",
     "prettier": "^2.0.5"
   }
