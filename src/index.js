@@ -20,7 +20,14 @@ app.use('/', middleware_auth);
 
 const schema = require('./graphql/index');
 const apollo = new ApolloServer({
-  schema: schema
+  schema: schema,
+  playground: true,
+  context: async ({ req, connection, res }) => {
+    return {
+      req: req,
+      res: res
+    };
+  }
 });
 
 apollo.applyMiddleware({ app, path: '/' });

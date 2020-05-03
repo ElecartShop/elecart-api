@@ -9,7 +9,7 @@ var queries = {};
 var mutations = {};
 
 async function authMiddleware(resolve, source, args, context, info) {
-  if (context.authorized) {
+  if (context.req.authorized) {
     return resolve(source, args, context, info);
   }
 
