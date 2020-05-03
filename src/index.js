@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require('./config/mongoose');
 const graphqlHTTP = require("express-graphql");
+const { ApolloServer } = require('apollo-server-express');
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -18,11 +19,11 @@ app.use('/', middleware_log);
 app.use('/', middleware_auth);
 
 const schema = require('./graphql/index');
-app.use('/', cors(), graphqlHTTP({
-  schema: schema,
-  rootValue: global,
-  graphiql: true
-}));
+const apollo = new ApolloServer({
+  schema: schema
+});
+
+apollo.applyMiddleware({ app, path: '/' });
 
 app.listen(process.env.PORT || 4000, () => {
   console.log('A GraphQL API running at port 4000');
