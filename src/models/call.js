@@ -3,10 +3,6 @@ const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongo
 const Schema = mongoose.Schema;
 
 var schema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
   shop_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Shop',
@@ -15,19 +11,11 @@ var schema = new Schema({
   created: {
     type: Date,
     default: Date.now
-  },
-  modified: {
-    type: Date,
-    default: Date.now
-  },
-  deleted: {
-    type: Date,
-    required: false
   }
 });
 
 module.exports = {};
-module.exports.Model = mongoose.model('Coupon', schema);
+module.exports.Model = mongoose.model('Call', schema);
 
 var ModelTC = new composeWithMongoose(module.exports.Model);
 

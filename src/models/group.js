@@ -69,4 +69,6 @@ ModelTC.addRelation('shops', {
   projection: { shops: true },
 });*/
 
+ModelTC.needsAuthorized = true;
+
 module.exports.ModelTC = ModelTC;

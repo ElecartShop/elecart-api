@@ -1,33 +1,37 @@
 [
   {
     "_id": { "$oid": "5eaca52c6e49885a5bdae193"},
-    "name": "MyUser"
+    "name": "MyUser",
+    "password": "$2y$12$e2dy//tt6PMXwKJrn33VjOEOQJKlS/5u9Hx75j9E1qm9uEyi6Al/O"
   },
   {
     "_id": { "$oid": "5eaca53198ade06e86fe821d"},
-    "name": "NotMyUser"
+    "name": "NotMyUser",
+    "password": "$2y$12$ERVcOrdEDpv0UPT5SiTGB.i77TpMYmR/0QUraje86zNtRds8OoNf2"
   },
   {
     "_id": { "$oid": "5eaca58e0c37f8476fb29e55"},
-    "name": "GroupUser"
+    "name": "GroupUser",
+    "password": "$2y$12$6VT9H3DDKdsmj6o/IHcYVu1fhq2hsuv16EnCxTI3OQFKVoyE2HrAe"
   },
   {
     "_id": { "$oid": "5eaca7615f443a2fde719016"},
     "name": "ShopUser",
-    "users": [
-      { "$oid": "5eaca956943bfa4faab04d3d" }
-    ]
+    "password": "$2y$12$Ml2.o09WyuYoYFAUgCsS8u1Pa1ReRA.PIoMwUAtIVS1AzivdPSPiW"
   },
   {
     "_id": { "$oid": "5eaca78a13263017a3e443df"},
-    "name": "OutsideUser"
+    "name": "OutsideUser",
+    "password": "$2y$12$lWdOEoyZ4LPcTER8Eg2GCOVsxXlPyx2gMw8VojXX94gckU3wukkHK"
   },
   {
     "_id": { "$oid": "5eaca7bb12081f8598567732"},
-    "name": "OutsideGroupUser"
+    "name": "OutsideGroupUser",
+    "password": "$2y$12$5i2b15FkycEukkprQZ4UDeMO7THAX6SrgQyM0gqdeYfEey2uKM8Xy"
   },
   {
     "_id": { "$oid": "5eaca7caf9f583d944ac4afc"},
-    "name": "OutsideShopUser"
+    "name": "OutsideShopUser",
+    "password": "$2y$12$BezTIwYKe3wPvEpFf5Ge5u4/0XuQb3drfqGB5Vs/mX3DsiDtzdu2C"
   }
 ]

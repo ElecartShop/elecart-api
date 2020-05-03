@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 
 var schema = new Schema({
@@ -7,9 +9,8 @@ var schema = new Schema({
     type: String,
     required: true
   },
-  account_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Account',
+  password: {
+    type: String,
     required: true
   },
   created: {
@@ -41,5 +42,47 @@ ModelTC.addRelation('account', {
   },
   projection: { account_id: true },
 });
+
+ModelTC.addFields({
+  token: {
+    type: 'String',
+    description: 'Token of authenticated user.'
+  }
+});
+
+ModelTC.addResolver({
+  kind: 'mutation',
+  name: 'loginUser',
+  args: {
+    identity: 'String!',
+    password: 'String!'
+  },
+  type: ModelTC.getResolver('updateById').getType(),
+  resolve: async({args, context}) => {
+    let user = await module.exports.Model.findOne({ name: args.identity });
+
+    if(!user) {
+      throw new Error('User/Password combination is wrong.');
+    }
+
+    const isEqual = await bcrypt.compare(args.password, user.password);
+    if(!isEqual) {
+      throw new Error('User/Password combination is wrong.');
+    }
+    const token = jwt.sign({user_id: user._id}, 'moveSecretToENV', {
+      expiresIn: '8h'
+    });
+
+    return {
+      recordId: user._id,
+      record: {
+        name: user.name,
+        token: token
+      }
+    };
+  }
+});
+
+ModelTC.needsAuthorized = true;
 
 module.exports.ModelTC = ModelTC;

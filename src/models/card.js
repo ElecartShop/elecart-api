@@ -53,7 +53,7 @@ ModelTC.addRelation('shop', {
 });
 
 const visitor = require('./visitor');
-ModelTC.addRelation('shop', {
+ModelTC.addRelation('visitor', {
   resolver: () => visitor.ModelTC.getResolver('findOne'),
   prepareArgs: {
     filter: (source) => ({ _id: source.visitor_id }),
