@@ -12,6 +12,10 @@ var schema = new Schema({
     ref: 'Shop',
     required: true
   },
+  password: {
+    type: String,
+    required: true
+  },
   created: {
     type: Date,
     default: Date.now
@@ -40,6 +44,39 @@ ModelTC.addRelation('shop', {
     sort: null,
   },
   projection: { shop_id: true },
+});
+
+ModelTC.addResolver({
+  kind: 'mutation',
+  name: 'loginCustomer',
+  args: {
+    identity: 'String!',
+    password: 'String!'
+  },
+  type: ModelTC.getResolver('updateById').getType(),
+  resolve: async({args, context}) => {
+    let customer = await module.exports.Model.findOne({ name: args.identity });
+
+    if(!customer) {
+      throw new Error('User/Password combination is wrong.');
+    }
+
+    const isEqual = await bcrypt.compare(args.password, customer.password);
+    if(!isEqual) {
+      throw new Error('User/Password combination is wrong.');
+    }
+    const token = jwt.sign({user_id: user._id}, 'moveSecretToENV', {
+      expiresIn: '8h'
+    });
+
+    return {
+      recordId: customer._id,
+      record: {
+        name: customer.name,
+        token: token
+      }
+    };
+  }
 });
 
 module.exports.ModelTC = ModelTC;

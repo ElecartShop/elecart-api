@@ -25,7 +25,7 @@ fs
     const object = file.slice(0, -3);
     const {Model, ModelTC} = require('../models/'+object);
 
-    var queries
+    var queries;
     if (ModelTC.needsAuthorized) {
       queries = {
         [object+'ById']: ModelTC.getResolver('findById', [authMiddleware]),
@@ -65,6 +65,11 @@ fs
     if (object === 'user') {
       schemaComposer.Mutation.addFields({
         loginUser: ModelTC.getResolver('loginUser'),
+      });
+    }
+    if (object === 'customer') {
+      schemaComposer.Mutation.addFields({
+        loginCustomer: ModelTC.getResolver('loginCustomer'),
       });
     }
   });
