@@ -3,10 +3,6 @@ const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongo
 const Schema = mongoose.Schema;
 
 var schema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
   shop_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Shop',
