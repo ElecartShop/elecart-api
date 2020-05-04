@@ -25,52 +25,42 @@ fs
     const object = file.slice(0, -3);
     const {Model, ModelTC} = require('../models/'+object);
 
-    var queries;
+    var resolvers = [];
     if (ModelTC.needsAuthorized) {
-      queries = {
-        [object+'ById']: ModelTC.getResolver('findById', [authMiddleware]),
-        [object+'ByIds']: ModelTC.getResolver('findByIds', [authMiddleware]),
-        [object+'One']: ModelTC.getResolver('findOne', [authMiddleware]),
-        [object+'Many']: ModelTC.getResolver('findMany', [authMiddleware]),
-        [object+'Count']: ModelTC.getResolver('count', [authMiddleware]),
-        [object+'Connection']: ModelTC.getResolver('connection', [authMiddleware]),
-        [object+'Pagination']: ModelTC.getResolver('pagination', [authMiddleware]),
-      };
-    } else {
-      queries = {
-        [object+'ById']: ModelTC.getResolver('findById'),
-        [object+'ByIds']: ModelTC.getResolver('findByIds'),
-        [object+'One']: ModelTC.getResolver('findOne'),
-        [object+'Many']: ModelTC.getResolver('findMany'),
-        [object+'Count']: ModelTC.getResolver('count'),
-        [object+'Connection']: ModelTC.getResolver('connection'),
-        [object+'Pagination']: ModelTC.getResolver('pagination'),
-      };
+      resolvers.push(authMiddleware);
     }
 
-    if (ModelTC.needsAuthorized) {
-      const mutations = {
-          [object+'CreateOne']: ModelTC.getResolver('createOne', [authMiddleware]),
-          [object+'CreateMany']: ModelTC.getResolver('createMany', [authMiddleware]),
-          [object+'UpdateById']: ModelTC.getResolver('updateById', [authMiddleware]),
-          [object+'UpdateOne']: ModelTC.getResolver('updateOne', [authMiddleware]),
-          [object+'UpdateMan']: ModelTC.getResolver('updateMany', [authMiddleware]),
-          [object+'RemoveById']: ModelTC.getResolver('removeById', [authMiddleware]),
-          [object+'RemoveOne']: ModelTC.getResolver('removeOne', [authMiddleware]),
-          [object+'RemoveMany']: ModelTC.getResolver('removeMany', [authMiddleware]),
-      };
-    } else {
-      const mutations = {
-          [object+'CreateOne']: ModelTC.getResolver('createOne'),
-          [object+'CreateMany']: ModelTC.getResolver('createMany'),
-          [object+'UpdateById']: ModelTC.getResolver('updateById'),
-          [object+'UpdateOne']: ModelTC.getResolver('updateOne'),
-          [object+'UpdateMan']: ModelTC.getResolver('updateMany'),
-          [object+'RemoveById']: ModelTC.getResolver('removeById'),
-          [object+'RemoveOne']: ModelTC.getResolver('removeOne'),
-          [object+'RemoveMany']: ModelTC.getResolver('removeMany'),
-      };
-    }
+    var queries = {};
+    var query_sets = [
+      {call: 'ById', resolver: 'findById'},
+      {call: 'ByIds', resolver: 'findByIds'},
+      {call: 'One', resolver: 'findOne'},
+      {call: 'Many', resolver: 'findMany'},
+      {call: 'Count', resolver: 'count'},
+      {call: 'Connection', resolver: 'connection'},
+      {call: 'Pagination', resolver: 'pagination'}
+    ];
+
+    query_sets.forEach((query) => {
+      queries[object+query.call] = ModelTC.getResolver(query.resolver, resolvers);
+    });
+
+
+    var mutations = {};
+    var mutation_sets = [
+      {call: 'CreateOne', resolver: 'createOne'},
+      {call: 'CreateMany', resolver: 'createMany'},
+      {call: 'UpdateById', resolver: 'updateById'},
+      {call: 'UpdateOne', resolver: 'updateOne'},
+      {call: 'UpdateMany', resolver: 'updateMany'},
+      {call: 'RemoveById', resolver: 'removeById'},
+      {call: 'RemoveOne', resolver: 'removeOne'},
+      {call: 'RemoveMany', resolver: 'removeMany'}
+    ];
+
+    mutation_sets.forEach((mutation) => {
+      mutations[object+mutation.call] = ModelTC.getResolver(mutation.resolver, resolvers);
+    });
 
     schemaComposer.Query.addFields(queries);
     schemaComposer.Mutation.addFields(mutations);
