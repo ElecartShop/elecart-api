@@ -43,6 +43,7 @@ var schema = new Schema({
 });
 
 schema.index({shop_id: 1, url: 1}, {unique: true});
+schema.index({shop_id: 1, name: 1}, {unique: true});
 
 module.exports = {};
 module.exports.Model = mongoose.model('Category', schema);

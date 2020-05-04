@@ -38,6 +38,8 @@ var schema = new Schema({
   collection: 'productAttributes'
 });
 
+schema.index({attribute_id: 1, product_id: 1}, {unique: true});
+
 module.exports = {};
 module.exports.Model = mongoose.model('ProductAttributes', schema);
 

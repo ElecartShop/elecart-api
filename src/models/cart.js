@@ -11,7 +11,8 @@ var schema = new Schema({
   visitor_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Visitor',
-    required: true
+    required: true,
+    unique: true
   },
   customer_id: {
     type: mongoose.Schema.Types.ObjectId,

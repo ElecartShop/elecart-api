@@ -31,6 +31,8 @@ var schema = new Schema({
   }
 });
 
+schema.index({account_id: 1, name: 1}, {unique: true});
+
 module.exports = {};
 module.exports.Model = mongoose.model('Group', schema);
 
