@@ -3,23 +3,24 @@ const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongo
 const Schema = mongoose.Schema;
 
 var schema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
   shop_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Shop',
     required: true
   },
-  url: {
-    type: String
+  attribute_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Attribute',
+    required: true
   },
-  summery: {
-    type: String
+  product_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product',
+    required: true
   },
-  weight: {
-    type: Number
+  value: {
+    type: String,
+    required: true
   },
   created: {
     type: Date,
@@ -33,10 +34,12 @@ var schema = new Schema({
     type: Date,
     required: false
   }
+}, {
+  collection: 'productAttributes'
 });
 
 module.exports = {};
-module.exports.Model = mongoose.model('Product', schema);
+module.exports.Model = mongoose.model('ProductAttributes', schema);
 
 var ModelTC = new composeWithMongoose(module.exports.Model);
 
@@ -51,26 +54,26 @@ ModelTC.addRelation('shop', {
   projection: { shop_id: true },
 });
 
-const productImage = require('./productImage');
-ModelTC.addRelation('productImages', {
-  resolver: () => productImage.ModelTC.getResolver('findMany'),
+const attribute = require('./attribute');
+ModelTC.addRelation('attribute', {
+  resolver: () => attribute.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ product_id: source.id }),
+    filter: (source) => ({ _id: source.attribute_id }),
     skip: null,
     sort: null,
   },
-  projection: { productImages: true },
+  projection: { attribute_id: true },
 });
 
-const productAttribute = require('./productAttribute');
-ModelTC.addRelation('productAttributes', {
-  resolver: () => productAttribute.ModelTC.getResolver('findMany'),
+const product = require('./product');
+ModelTC.addRelation('product', {
+  resolver: () => product.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ product_id: source.id }),
+    filter: (source) => ({ _id: source.product_id }),
     skip: null,
     sort: null,
   },
-  projection: { productAttributes: true },
+  projection: { product_id: true },
 });
 
 module.exports.ModelTC = ModelTC;

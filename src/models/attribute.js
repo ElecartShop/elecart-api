@@ -12,15 +12,6 @@ var schema = new Schema({
     ref: 'Shop',
     required: true
   },
-  url: {
-    type: String
-  },
-  summery: {
-    type: String
-  },
-  weight: {
-    type: Number
-  },
   created: {
     type: Date,
     default: Date.now
@@ -36,7 +27,7 @@ var schema = new Schema({
 });
 
 module.exports = {};
-module.exports.Model = mongoose.model('Product', schema);
+module.exports.Model = mongoose.model('Attributes', schema);
 
 var ModelTC = new composeWithMongoose(module.exports.Model);
 
@@ -49,28 +40,6 @@ ModelTC.addRelation('shop', {
     sort: null,
   },
   projection: { shop_id: true },
-});
-
-const productImage = require('./productImage');
-ModelTC.addRelation('productImages', {
-  resolver: () => productImage.ModelTC.getResolver('findMany'),
-  prepareArgs: {
-    filter: (source) => ({ product_id: source.id }),
-    skip: null,
-    sort: null,
-  },
-  projection: { productImages: true },
-});
-
-const productAttribute = require('./productAttribute');
-ModelTC.addRelation('productAttributes', {
-  resolver: () => productAttribute.ModelTC.getResolver('findMany'),
-  prepareArgs: {
-    filter: (source) => ({ product_id: source.id }),
-    skip: null,
-    sort: null,
-  },
-  projection: { productAttributes: true },
 });
 
 module.exports.ModelTC = ModelTC;

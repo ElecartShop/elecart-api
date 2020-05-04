@@ -1,0 +1,16 @@
+[
+  {
+    "_id": { "$oid": "5eb07bc5cd9c3d7afb0f2862" },
+    "value": "My Value 1",
+    "shop_id": { "$oid": "5eaca956943bfa4faab04d3d" },
+    "product_id": { "$oid": "5ead656fc1fbbdd3c585cc94" },
+    "attribute_id": { "$oid": "5eb07b1217d43ca7a09793c4" }
+  },
+  {
+    "_id": { "$oid": "5eb07bcae41f12351635b1b3" },
+    "value": "My Value 2",
+    "shop_id": { "$oid": "5eaca956943bfa4faab04d3d" },
+    "product_id": { "$oid": "5ead656fc1fbbdd3c585cc94" },
+    "attribute_id": { "$oid": "5eb07b1217d43ca7a09793c4" }
+  }
+]

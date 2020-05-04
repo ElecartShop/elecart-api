@@ -18,7 +18,8 @@ var schema = new Schema({
     required: true
   },
   url: {
-    type: String
+    type: String,
+    required: true
   },
   created: {
     type: Date,

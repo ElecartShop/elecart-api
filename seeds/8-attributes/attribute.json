@@ -1,0 +1,12 @@
+[
+  {
+    "_id": { "$oid": "5eb07b1217d43ca7a09793c4"},
+    "name": "My Attribute 1",
+    "shop_id": { "$oid": "5eaca956943bfa4faab04d3d"}
+  },
+  {
+    "_id": { "$oid": "5eb07b17658b743d00670793"},
+    "name": "My Attribute 2",
+    "shop_id": { "$oid": "5eaca956943bfa4faab04d3d"}
+  }
+]
