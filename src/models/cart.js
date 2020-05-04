@@ -3,10 +3,6 @@ const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongo
 const Schema = mongoose.Schema;
 
 var schema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
   shop_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Shop',
@@ -20,7 +16,7 @@ var schema = new Schema({
   customer_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Customer',
-    required: true
+    required: false
   },
   created: {
     type: Date,

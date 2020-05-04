@@ -17,6 +17,9 @@ var schema = new Schema({
     ref: 'Product',
     required: true
   },
+  url: {
+    type: String
+  },
   created: {
     type: Date,
     default: Date.now

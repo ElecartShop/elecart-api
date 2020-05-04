@@ -17,6 +17,14 @@ var schema = new Schema({
     ref: 'Category',
     required: true
   },
+  product_ids: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Product',
+    required: true
+  },
+  image_url: {
+    type: String
+  },
   created: {
     type: Date,
     default: Date.now

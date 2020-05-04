@@ -3,19 +3,10 @@ const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongo
 const Schema = mongoose.Schema;
 
 var schema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
   shop_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Shop',
     required: true
-  },
-  customer_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customer',
-    required: false
   },
   created: {
     type: Date,
@@ -32,7 +23,7 @@ var schema = new Schema({
 });
 
 module.exports = {};
-module.exports.Model = mongoose.model('Visitor', schema);
+module.exports.Model = mongoose.model('ShopShipper', schema);
 
 var ModelTC = new composeWithMongoose(module.exports.Model);
 
@@ -45,17 +36,6 @@ ModelTC.addRelation('shop', {
     sort: null,
   },
   projection: { shop_id: true },
-});
-
-const customer = require('./customer');
-ModelTC.addRelation('customer', {
-  resolver: () => customer.ModelTC.getResolver('findOne'),
-  prepareArgs: {
-    filter: (source) => ({ _id: source.customer_id }),
-    skip: null,
-    sort: null,
-  },
-  projection: { customer_id: true },
 });
 
 module.exports.ModelTC = ModelTC;
