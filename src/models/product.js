@@ -35,6 +35,8 @@ var schema = new Schema({
   }
 });
 
+schema.index({shop_id: 1, url: 1}, {unique: true});
+
 module.exports = {};
 module.exports.Model = mongoose.model('Product', schema);
 

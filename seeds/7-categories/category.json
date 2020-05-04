@@ -6,7 +6,8 @@
     "product_ids": [
       { "$oid": "5ead656fc1fbbdd3c585cc94" },
       { "$oid": "5ead6575ed1521d6c43fdd72" }
-    ]
+    ],
+    "url": "categoryurl1"
   },
   {
     "_id": { "$oid": "5ead82002c6047bd7f453eeb"},
@@ -14,7 +15,8 @@
     "shop_id": { "$oid": "5eaca956943bfa4faab04d3d"},
     "product_ids": [
       { "$oid": "5ead6579932a604d6bf73071" }
-    ]
+    ],
+    "url": "categoryurl2"
   },
   {
     "_id": { "$oid": "5eb011b81d0592375f58f23d"},
@@ -23,7 +25,8 @@
     "parent_id": "5ead81fba3c51d92e079989c",
     "product_ids": [
       { "$oid": "5ead6575ed1521d6c43fdd72" }
-    ]
+    ],
+    "url": "categoryurl3"
   },
   {
     "_id": { "$oid": "5ead8206b2bad4b35af2bae9"},
@@ -31,6 +34,7 @@
     "shop_id": { "$oid": "5eacabcd7142076dc7acc432"},
     "product_ids": [
       { "$oid": "5eacabcd7142076dc7acc432" }
-    ]
+    ],
+    "url": "categoryurl4"
   }
 ]
