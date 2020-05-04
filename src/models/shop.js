@@ -104,4 +104,13 @@ ModelTC.addRelation('products', {
   projection: { products: true },
 });
 
+ModelTC.addResolver({
+  name: 'findMany',
+  type: [ModelTC],
+  args: {account_id: 'MongoID!'},
+  resolve: async ({ source, args, context, info }) => {
+    return Model.find({ account_id: args.account_id });
+  }
+});
+
 module.exports.ModelTC = ModelTC;
