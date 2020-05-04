@@ -66,4 +66,19 @@ ModelTC.addRelation('parent', {
   projection: { parent: true },
 });
 
+const product = require('./product');
+ModelTC.addRelation('products', {
+  resolver: () => product.ModelTC.getResolver('findMany'),
+  prepareArgs: {
+    filter: (source) => ({
+      _operators : {
+        _id: { in: source.product_ids }
+      }
+    }),
+    skip: null,
+    sort: null,
+  },
+  projection: { products: true },
+});
+
 module.exports.ModelTC = ModelTC;
