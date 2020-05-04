@@ -1,7 +1,9 @@
+const Call = require('../models/call').Model;
+
 module.exports = (req, res, next) => {
-  //var call = new Call({shop_id: ''});
-  //console.log(req.body);
-  //console.log(call.save());
+  if (req.body.variables.shop_id) {
+    var call = Call.create({shop_id: req.body.variables.shop_id});
+  }
 
   next();
 }
