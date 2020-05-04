@@ -45,7 +45,6 @@ fs
       queries[object+query.call] = ModelTC.getResolver(query.resolver, resolvers);
     });
 
-
     var mutations = {};
     var mutation_sets = [
       {call: 'CreateOne', resolver: 'createOne'},
