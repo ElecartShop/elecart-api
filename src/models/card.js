@@ -12,11 +12,6 @@ var schema = new Schema({
     ref: 'Shop',
     required: true
   },
-  visitor_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Visitor',
-    required: true
-  },
   customer_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Customer',

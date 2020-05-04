@@ -32,9 +32,10 @@ var schema = new Schema({
 });
 
 module.exports = {};
-module.exports.Model = mongoose.model('Account', schema);
+const Model = mongoose.model('Account', schema);
+module.exports.Model = Model;
 
-var ModelTC = new composeWithMongoose(module.exports.Model);
+var ModelTC = new composeWithMongoose(Model);
 
 const user = require('./user');
 ModelTC.addRelation('users', {
@@ -66,6 +67,74 @@ ModelTC.addRelation('shops', {
     sort: null,
   },
   projection: { shops: true },
+});
+
+ModelTC.addResolver({
+  name: 'findById',
+  type: ModelTC,
+  args: {_id: 'MongoID!'},
+  resolve: async ({ source, args, context, info }) => {
+    return Model.findOne({ _id: args._id, user_ids: context.req.user_id });
+  }
+});
+
+ModelTC.addResolver({
+  name: 'findByIds',
+  type: [ModelTC],
+  args: {_ids: ['MongoID!']},
+  resolve: async ({ source, args, context, info }) => {
+    return Model.find({ _id: {$in: args._ids}, user_ids: context.req.user_id });
+  }
+});
+
+ModelTC.addResolver({
+  name: 'findOne',
+  type: ModelTC,
+  args: { filter: 'FilterAccountInput' },
+  resolve: async ({ source, args, context, info }) => {
+    if (!args.filter) {
+      args.filter = {};
+    }
+    args.filter.user_ids = context.req.user_id;
+
+    return Model.findOne(args.filter);
+  }
+});
+
+ModelTC.addResolver({
+  name: 'find',
+  type: [ModelTC],
+  args: { filter: 'FilterAccountInput' },
+  resolve: async ({ source, args, context, info }) => {
+    if (!args.filter) {
+      args.filter = {};
+    }
+    args.filter.user_ids = context.req.user_id;
+
+    return Model.find(args.filter);
+  }
+});
+
+ModelTC.addResolver({
+  name: 'findMany',
+  type: [ModelTC],
+  resolve: async ({ source, args, context, info }) => {
+    return Model.find({ user_ids: context.req.user_id });
+  }
+});
+
+ModelTC.addResolver({
+  name: 'count',
+  type: 'Int',
+  args: { filter: 'FilterAccountInput' },
+  resolve: async ({ source, args, context, info }) => {
+    if (!args.filter) {
+      args.filter = {};
+    }
+    args.filter.user_ids = context.req.user_id;
+
+    return Model.countDocuments(args.filter);
+  }
 });
 
 ModelTC.needsAuthorized = true;

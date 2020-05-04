@@ -48,16 +48,29 @@ fs
       };
     }
 
-    const mutations = {
-        [object+'CreateOne']: ModelTC.getResolver('createOne'),
-        [object+'CreateMany']: ModelTC.getResolver('createMany'),
-        [object+'UpdateById']: ModelTC.getResolver('updateById'),
-        [object+'UpdateOne']: ModelTC.getResolver('updateOne'),
-        [object+'UpdateMan']: ModelTC.getResolver('updateMany'),
-        [object+'RemoveById']: ModelTC.getResolver('removeById'),
-        [object+'RemoveOne']: ModelTC.getResolver('removeOne'),
-        [object+'RemoveMany']: ModelTC.getResolver('removeMany'),
-    };
+    if (ModelTC.needsAuthorized) {
+      const mutations = {
+          [object+'CreateOne']: ModelTC.getResolver('createOne', [authMiddleware]),
+          [object+'CreateMany']: ModelTC.getResolver('createMany', [authMiddleware]),
+          [object+'UpdateById']: ModelTC.getResolver('updateById', [authMiddleware]),
+          [object+'UpdateOne']: ModelTC.getResolver('updateOne', [authMiddleware]),
+          [object+'UpdateMan']: ModelTC.getResolver('updateMany', [authMiddleware]),
+          [object+'RemoveById']: ModelTC.getResolver('removeById', [authMiddleware]),
+          [object+'RemoveOne']: ModelTC.getResolver('removeOne', [authMiddleware]),
+          [object+'RemoveMany']: ModelTC.getResolver('removeMany', [authMiddleware]),
+      };
+    } else {
+      const mutations = {
+          [object+'CreateOne']: ModelTC.getResolver('createOne'),
+          [object+'CreateMany']: ModelTC.getResolver('createMany'),
+          [object+'UpdateById']: ModelTC.getResolver('updateById'),
+          [object+'UpdateOne']: ModelTC.getResolver('updateOne'),
+          [object+'UpdateMan']: ModelTC.getResolver('updateMany'),
+          [object+'RemoveById']: ModelTC.getResolver('removeById'),
+          [object+'RemoveOne']: ModelTC.getResolver('removeOne'),
+          [object+'RemoveMany']: ModelTC.getResolver('removeMany'),
+      };
+    }
 
     schemaComposer.Query.addFields(queries);
     schemaComposer.Mutation.addFields(mutations);
