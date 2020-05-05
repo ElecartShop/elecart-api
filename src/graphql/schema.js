@@ -1,3 +1,8 @@
+//TODO: Product tags
+//TODO: Customer tags
+//TODO: Product variants
+//TODO: Category and Product SEO
+
 const grapqlCompose = require('graphql-compose');
 const schemaComposer = new grapqlCompose.SchemaComposer();
 

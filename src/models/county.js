@@ -1,5 +1,3 @@
-//TODO: Coupon Model
-
 const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
@@ -7,11 +5,11 @@ const Schema = mongoose.Schema;
 var schema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
-  shop_id: {
+  state_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Shop',
+    ref: 'State',
     required: true
   },
   created: {
@@ -28,24 +26,33 @@ var schema = new Schema({
   }
 });
 
-schema.index({shop_id: 1, name: 1}, {unique: true});
-
 module.exports = {};
-module.exports.Model = mongoose.model('Coupon', schema);
+module.exports.Model = mongoose.model('CountyTax', schema);
 
 var ModelTC = new composeWithMongoose(module.exports.Model);
 
-const shop = require('./shop');
-ModelTC.addRelation('shop', {
-  resolver: () => shop.ModelTC.getResolver('findOne'),
+const state = require('./state');
+ModelTC.addRelation('state', {
+  resolver: () => state.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ _id: source.shop_id }),
+    filter: (source) => ({ _id: source.state_id }),
     skip: null,
     sort: null,
   },
-  projection: { shop_id: true }
+  projection: { state_id: true }
 });
 
-ModelTC.needsAuthorized = true;
+const countyTax = require('./countyTax');
+ModelTC.addRelation('tax', {
+  resolver: () => countyTax.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ county_id: source.id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { tax: true }
+});
+
+ModelTC.viewableOnly = true;
 
 module.exports.ModelTC = ModelTC;

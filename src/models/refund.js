@@ -1,17 +1,18 @@
-//TODO: Coupon Model
-
 const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
 
 var schema = new Schema({
-  name: {
-    type: String,
+  order_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Order',
     required: true
   },
-  shop_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Shop',
+  reason: {
+    type: String
+  },
+  value: {
+    type: Number,
     required: true
   },
   created: {
@@ -28,22 +29,20 @@ var schema = new Schema({
   }
 });
 
-schema.index({shop_id: 1, name: 1}, {unique: true});
-
 module.exports = {};
-module.exports.Model = mongoose.model('Coupon', schema);
+module.exports.Model = mongoose.model('Refund', schema);
 
 var ModelTC = new composeWithMongoose(module.exports.Model);
 
-const shop = require('./shop');
-ModelTC.addRelation('shop', {
-  resolver: () => shop.ModelTC.getResolver('findOne'),
+const order = require('./order');
+ModelTC.addRelation('order', {
+  resolver: () => order.ModelTC.getResolver('findOne'),
   prepareArgs: {
-    filter: (source) => ({ _id: source.shop_id }),
+    filter: (source) => ({ _id: source.order_id }),
     skip: null,
     sort: null,
   },
-  projection: { shop_id: true }
+  projection: { order_id: true }
 });
 
 ModelTC.needsAuthorized = true;

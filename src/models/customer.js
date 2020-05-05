@@ -28,6 +28,9 @@ var schema = new Schema({
     type: String,
     required: true
   },
+  phone: {
+    type: String
+  },
   birthday: {
     type: Date,
     required: false

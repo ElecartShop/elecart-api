@@ -15,6 +15,12 @@ var schema = new Schema({
   url: {
     type: String
   },
+  sku: {
+    type: String
+  },
+  stock: {
+    type: Number,
+  },
   summery: {
     type: String
   },

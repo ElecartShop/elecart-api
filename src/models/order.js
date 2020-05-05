@@ -23,14 +23,65 @@ var schema = new Schema({
     ref: 'Coupon',
     required: false
   },
+  notes: {
+    type: String
+  },
+  contact_email: {
+    type: String
+  },
+  contact_phone: {
+    type: String
+  },
+  billing_address: {
+    type: String
+  },
+  billing_address2: {
+    type: String
+  },
+  billing_state_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'State',
+    required: false
+  },
+  billing_county_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'County',
+    required: false
+  },
+  billing_zip: {
+    type: String
+  },
   processor_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Processor',
     required: false
   },
-  products: {
-    type: [{}],
+  product_ids: {
+    type: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true
+    }],
     required: true
+  },
+  shipping_address: {
+    type: String
+  },
+  shipping_address2: {
+    type: String
+  },
+  shipping_state_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'State',
+    required: false
+  },
+  shipping_county_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'County',
+    required: false
+  },
+  shipping_zip: {
+    type: String
   },
   shipper_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -39,6 +90,10 @@ var schema = new Schema({
   },
   total: {
 
+  },
+  fulfillment: {
+    type: String,
+    enum: ['Pending', 'Paid', 'Fulfilled']
   },
   created: {
     type: Date,
@@ -123,6 +178,63 @@ ModelTC.addRelation('shipper', {
     sort: null,
   },
   projection: { shipper_id: true }
+});
+
+const state = require('./state');
+ModelTC.addRelation('billing_state', {
+  resolver: () => state.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ _id: source.billing_state }),
+    skip: null,
+    sort: null,
+  },
+  projection: { billing_state: true }
+});
+
+ModelTC.addRelation('shipping_state', {
+  resolver: () => state.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ _id: source.shipping_state }),
+    skip: null,
+    sort: null,
+  },
+  projection: { shipping_state: true }
+});
+
+const county = require('./county');
+ModelTC.addRelation('billing_county', {
+  resolver: () => county.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ _id: source.billing_county }),
+    skip: null,
+    sort: null,
+  },
+  projection: { billing_county: true }
+});
+
+ModelTC.addRelation('shipping_county', {
+  resolver: () => county.ModelTC.getResolver('findOne'),
+  prepareArgs: {
+    filter: (source) => ({ _id: source.shipping_county }),
+    skip: null,
+    sort: null,
+  },
+  projection: { shipping_county: true }
+});
+
+const product = require('./product');
+ModelTC.addRelation('products', {
+  resolver: () => product.ModelTC.getResolver('findMany'),
+  prepareArgs: {
+    filter: (source) => ({
+      _operators : {
+        _id: { in: source.product_ids }
+      }
+    }),
+    skip: null,
+    sort: null,
+  },
+  projection: { products: true }
 });
 
 module.exports.ModelTC = ModelTC;

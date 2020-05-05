@@ -1,3 +1,5 @@
+//TODO: Shipper Model
+
 const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
