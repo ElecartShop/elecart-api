@@ -78,12 +78,22 @@ ModelTC.addRelation('productAttributes', {
   projection: { productAttributes: true },
 });
 
+//TODO: Find out how to automatically pass shop_id from shop and category
+ModelTC.addResolver({
+  name: 'findMany',
+  type: [ModelTC],
+  args: {shop_id: 'MongoID!'},
+  resolve: async ({ source, args, context, info }) => {
+    return Model.find({ shop_id: args.shop_id });
+  }
+});
+
 ModelTC.hasFindByURL = true;
 ModelTC.addResolver({
   kind: 'query',
   name: 'findByURL',
   args: {
-    shop_id: 'String!',
+    shop_id: 'MongoID!',
     url: 'String!'
   },
   type: ModelTC.getResolver('findOne').getType(),

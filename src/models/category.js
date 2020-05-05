@@ -92,14 +92,29 @@ ModelTC.addRelation('products', {
   projection: { products: true },
 });
 
-//TODO: Add top level on findMany resolver and optional parent_id
+//TODO: Find out how to automatically pass shop_id from shop
+ModelTC.addResolver({
+  name: 'findMany',
+  type: [ModelTC],
+  args: {shop_id: 'MongoID!', parent_id: 'MongoID'},
+  resolve: async ({ source, args, context, info }) => {
+    var findArgs = { shop_id: args.shop_id };
+    if (args.parent_id) {
+      findArgs.parent_id = args.parent_id;
+    } else {
+      findArgs.parent_id = null;
+    }
+
+    return Model.find(findArgs);
+  }
+});
 
 ModelTC.hasFindByURL = true;
 ModelTC.addResolver({
   kind: 'query',
   name: 'findByURL',
   args: {
-    shop_id: 'String!',
+    shop_id: 'MongoID!',
     url: 'String!'
   },
   type: ModelTC.getResolver('findOne').getType(),
