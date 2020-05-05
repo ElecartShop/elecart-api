@@ -53,7 +53,7 @@ if (shop.ModelTC) { // So we don't go in to a loop
       skip: null,
       sort: null,
     },
-    projection: { shop_id: true },
+    projection: { shop_id: true }
   });
 }
 
@@ -65,7 +65,7 @@ ModelTC.addRelation('productImages', {
     skip: null,
     sort: null,
   },
-  projection: { productImages: true },
+  projection: { productImages: true }
 });
 
 const productAttribute = require('./productAttribute');
@@ -76,7 +76,7 @@ ModelTC.addRelation('productAttributes', {
     skip: null,
     sort: null,
   },
-  projection: { productAttributes: true },
+  projection: { productAttributes: true }
 });
 
 //TODO: Find out how to automatically pass shop_id from shop and category

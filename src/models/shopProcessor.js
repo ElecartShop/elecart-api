@@ -40,7 +40,7 @@ ModelTC.addRelation('shop', {
     skip: null,
     sort: null,
   },
-  projection: { shop_id: true },
+  projection: { shop_id: true }
 });
 
 ModelTC.viewableOnly = true;

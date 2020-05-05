@@ -22,7 +22,7 @@
     "_id": { "$oid": "5eb011b81d0592375f58f23d"},
     "name": "My Child Category",
     "shop_id": { "$oid": "5eaca956943bfa4faab04d3d"},
-    "parent_id": "5ead81fba3c51d92e079989c",
+    "parent_id": { "$oid": "5ead81fba3c51d92e079989c"},
     "product_ids": [
       { "$oid": "5ead6575ed1521d6c43fdd72" }
     ],

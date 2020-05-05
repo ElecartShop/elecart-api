@@ -51,7 +51,7 @@ if (shop.ModelTC) { // So we don't go in to a loop
       skip: null,
       sort: null,
     },
-    projection: { shop_id: true },
+    projection: { shop_id: true }
   });
 }
 
@@ -64,7 +64,7 @@ if (product.ModelTC) {
       skip: null,
       sort: null,
     },
-    projection: { product_id: true },
+    projection: { product_id: true }
   });
 }
 

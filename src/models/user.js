@@ -46,7 +46,7 @@ ModelTC.addRelation('account', {
     skip: null,
     sort: null,
   },
-  projection: { account_id: true },
+  projection: { account_id: true }
 });
 
 ModelTC.addFields({

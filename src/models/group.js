@@ -46,7 +46,7 @@ ModelTC.addRelation('account', {
     skip: null,
     sort: null,
   },
-  projection: { account_id: true },
+  projection: { account_id: true }
 });
 
 const user = require('./user');
@@ -57,7 +57,7 @@ ModelTC.addRelation('users', {
     skip: null,
     sort: null,
   },
-  projection: { users: true },
+  projection: { users: true }
 });
 
 /*const shop = require('./shop');
@@ -68,7 +68,7 @@ ModelTC.addRelation('shops', {
     skip: null,
     sort: null,
   },
-  projection: { shops: true },
+  projection: { shops: true }
 });*/
 
 ModelTC.needsAuthorized = true;

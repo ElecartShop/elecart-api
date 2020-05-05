@@ -42,8 +42,10 @@ var schema = new Schema({
   }
 });
 
+schema.index({shop_id: 1});
 schema.index({shop_id: 1, url: 1}, {unique: true});
 schema.index({shop_id: 1, name: 1}, {unique: true});
+schema.index({shop_id: 1, parent_id: 1});
 
 var Model = mongoose.model('Category', schema);
 module.exports = {};
@@ -60,7 +62,7 @@ if (shop.ModelTC) { // So we don't go in to a loop
       skip: null,
       sort: null,
     },
-    projection: { shop_id: true },
+    projection: { shop_id: true }
   });
 }
 
@@ -73,9 +75,20 @@ if (shop.ModelTC) { // So we don't go in to a loop
       skip: null,
       sort: null,
     },
-    projection: { parent: true },
+    projection: { parent: true }
   });
 }
+
+//TODO: Find out how to automatically pass shop_id from category
+ModelTC.addRelation('children', {
+  resolver: () => ModelTC.getResolver('findMany'),
+  prepareArgs: {
+    filter: (source) => ({ parent_id: source._id }),
+    skip: null,
+    sort: null,
+  },
+  projection: { children: true }
+});
 
 const product = require('./product');
 ModelTC.addRelation('products', {
@@ -89,7 +102,7 @@ ModelTC.addRelation('products', {
     skip: null,
     sort: null,
   },
-  projection: { products: true },
+  projection: { products: true }
 });
 
 //TODO: Find out how to automatically pass shop_id from shop
@@ -98,14 +111,21 @@ ModelTC.addResolver({
   type: [ModelTC],
   args: {shop_id: 'MongoID!', parent_id: 'MongoID'},
   resolve: async ({ source, args, context, info }) => {
+    console.log(args);
     var findArgs = { shop_id: args.shop_id };
+
     if (args.parent_id) {
       findArgs.parent_id = args.parent_id;
+    } else if (args.filter && args.filter.parent_id) {
+      findArgs.parent_id = args.filter.parent_id;
     } else {
       findArgs.parent_id = null;
     }
 
-    return Model.find(findArgs);
+    console.log(findArgs);
+    var results = await Model.find(findArgs);
+    console.log(results);
+    return results;
   }
 });
 

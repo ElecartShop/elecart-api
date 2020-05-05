@@ -67,7 +67,7 @@ ModelTC.addRelation('shop', {
     skip: null,
     sort: null,
   },
-  projection: { shop_id: true },
+  projection: { shop_id: true }
 });
 
 const visitor = require('./visitor');
@@ -78,7 +78,7 @@ ModelTC.addRelation('visitor', {
     skip: null,
     sort: null,
   },
-  projection: { visitor_id: true },
+  projection: { visitor_id: true }
 });
 
 const customer = require('./customer');
@@ -89,7 +89,7 @@ ModelTC.addRelation('customer', {
     skip: null,
     sort: null,
   },
-  projection: { customer_id: true },
+  projection: { customer_id: true }
 });
 
 const coupon = require('./coupon');
@@ -100,7 +100,7 @@ ModelTC.addRelation('coupon', {
     skip: null,
     sort: null,
   },
-  projection: { coupon_id: true },
+  projection: { coupon_id: true }
 });
 
 const processor = require('./processor');
@@ -111,7 +111,7 @@ ModelTC.addRelation('processor', {
     skip: null,
     sort: null,
   },
-  projection: { processor_id: true },
+  projection: { processor_id: true }
 });
 
 const shipper = require('./shipper');
@@ -122,7 +122,7 @@ ModelTC.addRelation('shipper', {
     skip: null,
     sort: null,
   },
-  projection: { shipper_id: true },
+  projection: { shipper_id: true }
 });
 
 module.exports.ModelTC = ModelTC;

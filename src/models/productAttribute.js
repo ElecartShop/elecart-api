@@ -54,7 +54,7 @@ if (shop.ModelTC) { // So we don't go in to a loop
       skip: null,
       sort: null,
     },
-    projection: { shop_id: true },
+    projection: { shop_id: true }
   });
 }
 
@@ -66,7 +66,7 @@ ModelTC.addRelation('attribute', {
     skip: null,
     sort: null,
   },
-  projection: { attribute_id: true },
+  projection: { attribute_id: true }
 });
 
 const product = require('./product');
@@ -78,7 +78,7 @@ if (product.ModelTC) {
       skip: null,
       sort: null,
     },
-    projection: { product_id: true },
+    projection: { product_id: true }
   });
 }
 

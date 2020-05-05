@@ -45,7 +45,7 @@ ModelTC.addRelation('users', {
     skip: null,
     sort: null,
   },
-  projection: { users: true },
+  projection: { users: true }
 });
 
 ModelTC.addRelation('owner', {
@@ -55,7 +55,7 @@ ModelTC.addRelation('owner', {
     skip: null,
     sort: null,
   },
-  projection: { owner: true },
+  projection: { owner: true }
 });
 
 const shop = require('./shop');
@@ -66,7 +66,7 @@ ModelTC.addRelation('shops', {
     skip: null,
     sort: null,
   },
-  projection: { shops: true },
+  projection: { shops: true }
 });
 
 ModelTC.addResolver({

@@ -49,7 +49,7 @@ ModelTC.addRelation('account', {
     skip: null,
     sort: null,
   },
-  projection: { account_id: true },
+  projection: { account_id: true }
 });
 
 const user = require('./user');
@@ -79,7 +79,7 @@ ModelTC.addRelation('groups', {
     skip: null,
     sort: null,
   },
-  projection: { groups: true },
+  projection: { groups: true }
 });
 
 const category = require('./category');
@@ -90,7 +90,7 @@ ModelTC.addRelation('categories', {
     skip: null,
     sort: null,
   },
-  projection: { categories: true },
+  projection: { categories: true }
 });
 
 const product = require('./product');
@@ -101,7 +101,7 @@ ModelTC.addRelation('products', {
     skip: null,
     sort: null,
   },
-  projection: { products: true },
+  projection: { products: true }
 });
 
 ModelTC.addResolver({
