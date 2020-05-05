@@ -69,4 +69,7 @@ ModelTC.addRelation('customer', {
   projection: { customer_id: true },
 });
 
+
+ModelTC.needsCustomerAuthorization = true;
+
 module.exports.ModelTC = ModelTC;

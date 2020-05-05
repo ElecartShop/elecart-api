@@ -113,4 +113,6 @@ ModelTC.addResolver({
   }
 });
 
+ModelTC.viewableOnly = true;
+
 module.exports.ModelTC = ModelTC;

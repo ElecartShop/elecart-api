@@ -87,4 +87,6 @@ ModelTC.addRelation('products', {
   projection: { products: true },
 });
 
+//TODO: Make a findByUrl with shop_id
+
 module.exports.ModelTC = ModelTC;

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
 
+//TODO: Maybe add type
 var schema = new Schema({
   shop_id: {
     type: mongoose.Schema.Types.ObjectId,

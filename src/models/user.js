@@ -88,6 +88,6 @@ ModelTC.addResolver({
   }
 });
 
-ModelTC.needsAuthorized = true;
+ModelTC.viewableOnly = true;
 
 module.exports.ModelTC = ModelTC;

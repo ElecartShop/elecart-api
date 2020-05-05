@@ -45,6 +45,10 @@ fs
       queries[object+query.call] = ModelTC.getResolver(query.resolver, resolvers);
     });
 
+    if (ModelTC.viewableOnly && !ModelTC.needsAuthorized) {
+      resolvers.push(authMiddleware);
+    }
+
     var mutations = {};
     var mutation_sets = [
       {call: 'CreateOne', resolver: 'createOne'},

@@ -44,4 +44,6 @@ ModelTC.addRelation('shop', {
   projection: { shop_id: true },
 });
 
+ModelTC.viewableOnly = true;
+
 module.exports.ModelTC = ModelTC;

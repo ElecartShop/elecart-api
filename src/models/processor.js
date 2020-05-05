@@ -27,6 +27,6 @@ module.exports.Model = mongoose.model('Processor', schema);
 
 var ModelTC = new composeWithMongoose(module.exports.Model);
 
-ModelTC.needsAuthorized = true;
+ModelTC.viewableOnly = true;
 
 module.exports.ModelTC = ModelTC;

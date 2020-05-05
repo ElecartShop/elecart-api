@@ -64,4 +64,7 @@ ModelTC.addRelation('product', {
   projection: { product_id: true },
 });
 
+
+ModelTC.viewableOnly = true;
+
 module.exports.ModelTC = ModelTC;

@@ -76,4 +76,8 @@ ModelTC.addRelation('productAttributes', {
   projection: { productAttributes: true },
 });
 
+//TODO: Make a findByURL with shop_id
+
+ModelTC.viewableOnly = true;
+
 module.exports.ModelTC = ModelTC;
