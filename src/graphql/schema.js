@@ -45,6 +45,10 @@ fs
       queries[object+query.call] = ModelTC.getResolver(query.resolver, resolvers);
     });
 
+    if (ModelTC.hasFindByURL) {
+      queries[object+'ByURL'] = ModelTC.getResolver('findByURL');
+    }
+
     if (ModelTC.viewableOnly && !ModelTC.needsAuthorized) {
       resolvers.push(authMiddleware);
     }

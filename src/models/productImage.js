@@ -43,26 +43,30 @@ module.exports.Model = mongoose.model('ProductImage', schema);
 var ModelTC = new composeWithMongoose(module.exports.Model);
 
 const shop = require('./shop');
-ModelTC.addRelation('shop', {
-  resolver: () => shop.ModelTC.getResolver('findOne'),
-  prepareArgs: {
-    filter: (source) => ({ _id: source.shop_id }),
-    skip: null,
-    sort: null,
-  },
-  projection: { shop_id: true },
-});
+if (shop.ModelTC) { // So we don't go in to a loop
+  ModelTC.addRelation('shop', {
+    resolver: () => shop.ModelTC.getResolver('findOne'),
+    prepareArgs: {
+      filter: (source) => ({ _id: source.shop_id }),
+      skip: null,
+      sort: null,
+    },
+    projection: { shop_id: true },
+  });
+}
 
 const product = require('./product');
-ModelTC.addRelation('product', {
-  resolver: () => product.ModelTC.getResolver('findOne'),
-  prepareArgs: {
-    filter: (source) => ({ _id: source.product_id }),
-    skip: null,
-    sort: null,
-  },
-  projection: { product_id: true },
-});
+if (product.ModelTC) {
+  ModelTC.addRelation('product', {
+    resolver: () => product.ModelTC.getResolver('findOne'),
+    prepareArgs: {
+      filter: (source) => ({ _id: source.product_id }),
+      skip: null,
+      sort: null,
+    },
+    projection: { product_id: true },
+  });
+}
 
 
 ModelTC.viewableOnly = true;

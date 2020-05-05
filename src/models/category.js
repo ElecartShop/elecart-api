@@ -45,32 +45,37 @@ var schema = new Schema({
 schema.index({shop_id: 1, url: 1}, {unique: true});
 schema.index({shop_id: 1, name: 1}, {unique: true});
 
+var Model = mongoose.model('Category', schema);
 module.exports = {};
-module.exports.Model = mongoose.model('Category', schema);
+module.exports.Model = Model;
 
-var ModelTC = new composeWithMongoose(module.exports.Model);
+var ModelTC = new composeWithMongoose(Model);
 
 const shop = require('./shop');
-ModelTC.addRelation('shop', {
-  resolver: () => shop.ModelTC.getResolver('findOne'),
-  prepareArgs: {
-    filter: (source) => ({ _id: source.shop_id }),
-    skip: null,
-    sort: null,
-  },
-  projection: { shop_id: true },
-});
+if (shop.ModelTC) { // So we don't go in to a loop
+  ModelTC.addRelation('shop', {
+    resolver: () => shop.ModelTC.getResolver('findOne'),
+    prepareArgs: {
+      filter: (source) => ({ _id: source.shop_id }),
+      skip: null,
+      sort: null,
+    },
+    projection: { shop_id: true },
+  });
+}
 
 const category = require('./category');
-ModelTC.addRelation('parent', {
-  resolver: () => category.ModelTC.getResolver('findOne'),
-  prepareArgs: {
-    filter: (source) => ({ _id: source.parent_id }),
-    skip: null,
-    sort: null,
-  },
-  projection: { parent: true },
-});
+if (shop.ModelTC) { // So we don't go in to a loop
+  ModelTC.addRelation('parent', {
+    resolver: () => category.ModelTC.getResolver('findOne'),
+    prepareArgs: {
+      filter: (source) => ({ _id: source.parent_id }),
+      skip: null,
+      sort: null,
+    },
+    projection: { parent: true },
+  });
+}
 
 const product = require('./product');
 ModelTC.addRelation('products', {
@@ -87,6 +92,26 @@ ModelTC.addRelation('products', {
   projection: { products: true },
 });
 
-//TODO: Make a findByUrl with shop_id
+//TODO: Add top level on findMany resolver and optional parent_id
+
+ModelTC.hasFindByURL = true;
+ModelTC.addResolver({
+  kind: 'query',
+  name: 'findByURL',
+  args: {
+    shop_id: 'String!',
+    url: 'String!'
+  },
+  type: ModelTC.getResolver('findOne').getType(),
+  resolve: async({args, context}) => {
+    let category = await Model.findOne({ shop_id: args.shop_id, url: args.url });
+
+    if(!category) {
+      throw new Error('Category not found.');
+    }
+
+    return category;
+  }
+});
 
 module.exports.ModelTC = ModelTC;

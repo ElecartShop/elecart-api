@@ -32,10 +32,11 @@ var schema = new Schema({
   }
 });
 
+var Model = mongoose.model('User', schema);
 module.exports = {};
-module.exports.Model = mongoose.model('User', schema);
+module.exports.Model = Model;
 
-var ModelTC = new composeWithMongoose(module.exports.Model);
+var ModelTC = new composeWithMongoose(Model);
 
 const account = require('./account');
 ModelTC.addRelation('account', {
@@ -64,7 +65,7 @@ ModelTC.addResolver({
   },
   type: ModelTC.getResolver('updateById').getType(),
   resolve: async({args, context}) => {
-    let user = await module.exports.Model.findOne({ name: args.identity });
+    let user = await Model.findOne({ name: args.identity });
 
     if(!user) {
       throw new Error('User/Password combination is wrong.');
