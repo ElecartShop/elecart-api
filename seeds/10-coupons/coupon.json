@@ -1,0 +1,7 @@
+[
+  {
+    "_id": { "$oid": "5eb1a16ede88eec485e7dcc1"},
+    "name": "MyCoupon",
+    "shop_id": { "$oid": "5eaca956943bfa4faab04d3d"}
+  }
+]
