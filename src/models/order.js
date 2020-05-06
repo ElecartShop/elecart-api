@@ -88,8 +88,11 @@ const schema = new Schema({
     ref: 'Shipper',
     required: false
   },
+  weight: {
+    type: Number
+  },
   total: {
-
+    type: Number
   },
   fulfillment: {
     type: String,
