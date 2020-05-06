@@ -7,7 +7,7 @@
     "build": "npx babel src --out-dir dist",
     "seed": "npx mongo-seeding-cli -u mongodb://127.0.0.1:27017/elecart --drop-database ./seeds",
     "start": "node dist/index.js",
-    "dev": "npx nodemon --legacy-watch src/index.js",
+    "dev": "npx nodemon --watch src --legacy-watch src/index.js",
     "prettier": "npx prettier --config ./.prettierrc --write \"**/*.js\"",
     "pretest": "npx eslint src",
     "postinstall": "rm -rf dist && yarn run build",

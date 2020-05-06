@@ -27,7 +27,7 @@ const schema = new Schema({
 });
 
 module.exports = {};
-module.exports.Model = mongoose.model('CountyTax', schema);
+module.exports.Model = mongoose.model('County', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 

@@ -10,13 +10,17 @@ const schema = new Schema({
     required: true,
     unique: true
   },
-  password: {
+  password: { // TODO: Automatically hash this going in
     type: String,
     required: true
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
+  },
+  phone: {
+    type: String
   },
   created: {
     type: Date,
@@ -89,6 +93,6 @@ ModelTC.addResolver({
   }
 });
 
-ModelTC.viewableOnly = true;
+ModelTC.createableOnly = true;
 
 module.exports.ModelTC = ModelTC;

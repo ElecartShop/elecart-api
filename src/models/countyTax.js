@@ -32,7 +32,7 @@ const schema = new Schema({
 });
 
 module.exports = {};
-module.exports.Model = mongoose.model('CountyTaxes', schema);
+module.exports.Model = mongoose.model('CountyTax', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 

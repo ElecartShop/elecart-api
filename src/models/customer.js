@@ -14,7 +14,7 @@ const schema = new Schema({
     ref: 'Shop',
     required: true
   },
-  password: {
+  password: { // TODO: Automatically hash this going in
     type: String,
     required: true
   },
