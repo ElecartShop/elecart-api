@@ -21,9 +21,7 @@ function authMiddleware(resolve, source, args, context, info) {
 
 fs
   .readdirSync(__dirname+'/../models')
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
+  .filter(file => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
   .forEach(file => {
     const object = file.slice(0, -3);
     const {ModelTC} = require('../models/'+object);

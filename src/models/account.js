@@ -73,18 +73,14 @@ ModelTC.addResolver({
   name: 'findById',
   type: ModelTC,
   args: {_id: 'MongoID!'},
-  resolve: ({ source, args, context, info }) => {
-    return Model.findOne({ _id: args._id, user_ids: context.req.user_id });
-  }
+  resolve: ({ source, args, context, info }) => Model.findOne({ _id: args._id, user_ids: context.req.user_id })
 });
 
 ModelTC.addResolver({
   name: 'findByIds',
   type: [ModelTC],
   args: {_ids: ['MongoID!']},
-  resolve: ({ source, args, context, info }) => {
-    return Model.find({ _id: {$in: args._ids}, user_ids: context.req.user_id });
-  }
+  resolve: ({ source, args, context, info }) => Model.find({ _id: {$in: args._ids}, user_ids: context.req.user_id })
 });
 
 ModelTC.addResolver({
@@ -118,9 +114,7 @@ ModelTC.addResolver({
 ModelTC.addResolver({
   name: 'findMany',
   type: [ModelTC],
-  resolve: ({ source, args, context, info }) => {
-    return Model.find({ user_ids: context.req.user_id });
-  }
+  resolve: ({ source, args, context, info }) => Model.find({ user_ids: context.req.user_id })
 });
 
 ModelTC.addResolver({

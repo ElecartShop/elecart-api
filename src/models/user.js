@@ -83,7 +83,7 @@ ModelTC.addResolver({
       recordId: user._id,
       record: {
         name: user.name,
-        token: token
+        token
       }
     };
   }

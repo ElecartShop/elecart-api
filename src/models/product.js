@@ -90,9 +90,7 @@ ModelTC.addResolver({
   name: 'findMany',
   type: [ModelTC],
   args: {shop_id: 'MongoID!'},
-  resolve: ({ source, args, context, info }) => {
-    return Model.find({ shop_id: args.shop_id });
-  }
+  resolve: ({ source, args, context, info }) => Model.find({ shop_id: args.shop_id })
 });
 
 ModelTC.hasFindByURL = true;

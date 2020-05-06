@@ -1,4 +1,4 @@
 describe('Unit Tests', () => {
-  delete require.cache[require.resolve('./unit/account')];
-  require('./unit/account');
+  delete require.cache[require.resolve('./unit/user')];
+  require('./unit/user');
 });

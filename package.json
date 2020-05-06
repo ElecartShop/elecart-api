@@ -9,11 +9,11 @@
     "start": "node dist/index.js",
     "dev": "npx nodemon --legacy-watch src/index.js",
     "prettier": "npx prettier --config ./.prettierrc --write \"**/*.js\"",
-    "pretest": "npx eslint --ignore-path .gitignore .",
+    "pretest": "npx eslint src",
     "postinstall": "rm -rf dist && yarn run build",
     "lint": "yarn prettier --write --check --config ./.prettierrc \"**/*.js\" && eslint --fix ./src",
     "release": "release-it patch --no-npm.publish",
-    "test": "npx mocha test/*.test.js"
+    "test": "npx mocha tests/*.test.js"
   },
   "repository": {
     "type": "git",

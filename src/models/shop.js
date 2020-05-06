@@ -109,9 +109,7 @@ ModelTC.addResolver({
   name: 'findMany',
   type: [ModelTC],
   args: {account_id: 'MongoID!'},
-  resolve: async ({ source, args, context, info }) => {
-    return await Model.find({ account_id: args.account_id });
-  }
+  resolve: async ({ source, args, context, info }) => await Model.find({ account_id: args.account_id })
 });
 
 ModelTC.viewableOnly = true;
