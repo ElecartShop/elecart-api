@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
   order_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Order',
@@ -32,7 +32,7 @@ var schema = new Schema({
 module.exports = {};
 module.exports.Model = mongoose.model('Refund', schema);
 
-var ModelTC = new composeWithMongoose(module.exports.Model);
+const ModelTC = new composeWithMongoose(module.exports.Model);
 
 const order = require('./order');
 ModelTC.addRelation('order', {

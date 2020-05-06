@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
   shop_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Shop',
@@ -36,7 +36,7 @@ var schema = new Schema({
 module.exports = {};
 module.exports.Model = mongoose.model('Cart', schema);
 
-var ModelTC = new composeWithMongoose(module.exports.Model);
+const ModelTC = new composeWithMongoose(module.exports.Model);
 
 const shop = require('./shop');
 ModelTC.addRelation('shop', {

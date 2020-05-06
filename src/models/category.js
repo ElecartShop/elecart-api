@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
   name: {
     type: String,
     required: true
@@ -47,11 +47,11 @@ schema.index({shop_id: 1, url: 1}, {unique: true});
 schema.index({shop_id: 1, name: 1}, {unique: true});
 schema.index({shop_id: 1, parent_id: 1});
 
-var Model = mongoose.model('Category', schema);
+const Model = mongoose.model('Category', schema);
 module.exports = {};
 module.exports.Model = Model;
 
-var ModelTC = new composeWithMongoose(Model);
+const ModelTC = new composeWithMongoose(Model);
 
 const shop = require('./shop');
 if (shop.ModelTC) { // So we don't go in to a loop
@@ -111,8 +111,7 @@ ModelTC.addResolver({
   type: [ModelTC],
   args: {shop_id: 'MongoID!', parent_id: 'MongoID'},
   resolve: async ({ source, args, context, info }) => {
-    console.log(args);
-    var findArgs = { shop_id: args.shop_id };
+    const findArgs = { shop_id: args.shop_id };
 
     if (args.parent_id) {
       findArgs.parent_id = args.parent_id;
@@ -122,9 +121,7 @@ ModelTC.addResolver({
       findArgs.parent_id = null;
     }
 
-    console.log(findArgs);
-    var results = await Model.find(findArgs);
-    console.log(results);
+    const results = await Model.find(findArgs);
     return results;
   }
 });
@@ -138,8 +135,8 @@ ModelTC.addResolver({
     url: 'String!'
   },
   type: ModelTC.getResolver('findOne').getType(),
-  resolve: async({args, context}) => {
-    let category = await Model.findOne({ shop_id: args.shop_id, url: args.url });
+  resolve: async ({args, context}) => {
+    const category = await Model.findOne({ shop_id: args.shop_id, url: args.url });
 
     if(!category) {
       throw new Error('Category not found.');

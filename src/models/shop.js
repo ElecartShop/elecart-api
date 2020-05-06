@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
   name: {
     type: String,
     required: true
@@ -37,9 +37,10 @@ var schema = new Schema({
 });
 
 module.exports = {};
-module.exports.Model = mongoose.model('Shop', schema);
+const Model = mongoose.model('Shop', schema);
+module.exports.Model = Model;
 
-var ModelTC = new composeWithMongoose(module.exports.Model);
+const ModelTC = new composeWithMongoose(Model);
 
 const account = require('./account');
 ModelTC.addRelation('account', {
@@ -109,7 +110,7 @@ ModelTC.addResolver({
   type: [ModelTC],
   args: {account_id: 'MongoID!'},
   resolve: async ({ source, args, context, info }) => {
-    return Model.find({ account_id: args.account_id });
+    return await Model.find({ account_id: args.account_id });
   }
 });
 

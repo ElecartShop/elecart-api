@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
   name: {
     type: String,
     required: true
@@ -31,7 +31,7 @@ schema.index({shop_id: 1, name: 1}, {unique: true});
 module.exports = {};
 module.exports.Model = mongoose.model('Attributes', schema);
 
-var ModelTC = new composeWithMongoose(module.exports.Model);
+const ModelTC = new composeWithMongoose(module.exports.Model);
 
 const shop = require('./shop');
 if (shop.ModelTC) { // So we don't go in to a loop

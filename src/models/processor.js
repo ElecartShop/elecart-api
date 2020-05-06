@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
   name: {
     type: String,
     required: true,
@@ -27,7 +27,7 @@ var schema = new Schema({
 module.exports = {};
 module.exports.Model = mongoose.model('Processor', schema);
 
-var ModelTC = new composeWithMongoose(module.exports.Model);
+const ModelTC = new composeWithMongoose(module.exports.Model);
 
 ModelTC.viewableOnly = true;
 

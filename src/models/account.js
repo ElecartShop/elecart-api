@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
   name: {
     type: String,
     required: true
@@ -35,7 +35,7 @@ module.exports = {};
 const Model = mongoose.model('Account', schema);
 module.exports.Model = Model;
 
-var ModelTC = new composeWithMongoose(Model);
+const ModelTC = new composeWithMongoose(Model);
 
 const user = require('./user');
 ModelTC.addRelation('users', {
@@ -73,7 +73,7 @@ ModelTC.addResolver({
   name: 'findById',
   type: ModelTC,
   args: {_id: 'MongoID!'},
-  resolve: async ({ source, args, context, info }) => {
+  resolve: ({ source, args, context, info }) => {
     return Model.findOne({ _id: args._id, user_ids: context.req.user_id });
   }
 });
@@ -82,7 +82,7 @@ ModelTC.addResolver({
   name: 'findByIds',
   type: [ModelTC],
   args: {_ids: ['MongoID!']},
-  resolve: async ({ source, args, context, info }) => {
+  resolve: ({ source, args, context, info }) => {
     return Model.find({ _id: {$in: args._ids}, user_ids: context.req.user_id });
   }
 });
@@ -91,7 +91,7 @@ ModelTC.addResolver({
   name: 'findOne',
   type: ModelTC,
   args: { filter: 'FilterAccountInput' },
-  resolve: async ({ source, args, context, info }) => {
+  resolve: ({ source, args, context, info }) => {
     if (!args.filter) {
       args.filter = {};
     }
@@ -105,7 +105,7 @@ ModelTC.addResolver({
   name: 'find',
   type: [ModelTC],
   args: { filter: 'FilterAccountInput' },
-  resolve: async ({ source, args, context, info }) => {
+  resolve: ({ source, args, context, info }) => {
     if (!args.filter) {
       args.filter = {};
     }
@@ -118,7 +118,7 @@ ModelTC.addResolver({
 ModelTC.addResolver({
   name: 'findMany',
   type: [ModelTC],
-  resolve: async ({ source, args, context, info }) => {
+  resolve: ({ source, args, context, info }) => {
     return Model.find({ user_ids: context.req.user_id });
   }
 });
@@ -127,7 +127,7 @@ ModelTC.addResolver({
   name: 'count',
   type: 'Int',
   args: { filter: 'FilterAccountInput' },
-  resolve: async ({ source, args, context, info }) => {
+  resolve: ({ source, args, context, info }) => {
     if (!args.filter) {
       args.filter = {};
     }

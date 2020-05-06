@@ -13,10 +13,10 @@ module.exports = (req, res, next) => {
   } catch(err) {
     req.authorized = false;
     return next();
-  };
+  }
 
   req.authorized = true;
   req.user_id = decodedToken.user_id;
 
   next();
-}
+};

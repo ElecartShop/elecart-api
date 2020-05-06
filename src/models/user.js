@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
   name: {
     type: String,
     required: true,
@@ -32,11 +32,11 @@ var schema = new Schema({
   }
 });
 
-var Model = mongoose.model('User', schema);
+const Model = mongoose.model('User', schema);
 module.exports = {};
 module.exports.Model = Model;
 
-var ModelTC = new composeWithMongoose(Model);
+const ModelTC = new composeWithMongoose(Model);
 
 const account = require('./account');
 ModelTC.addRelation('account', {
@@ -64,8 +64,8 @@ ModelTC.addResolver({
     password: 'String!'
   },
   type: ModelTC.getResolver('updateById').getType(),
-  resolve: async({args, context}) => {
-    let user = await Model.findOne({ name: args.identity });
+  resolve: async ({args, context}) => {
+    const user = await Model.findOne({ name: args.identity });
 
     if(!user) {
       throw new Error('User/Password combination is wrong.');

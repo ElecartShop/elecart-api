@@ -10,10 +10,8 @@ const fs = require('fs');
 const path = require('path');
 
 const basename = path.basename(__filename);
-var queries = {};
-var mutations = {};
 
-async function authMiddleware(resolve, source, args, context, info) {
+function authMiddleware(resolve, source, args, context, info) {
   if (context.req.authorized) {
     return resolve(source, args, context, info);
   }
@@ -28,15 +26,15 @@ fs
   })
   .forEach(file => {
     const object = file.slice(0, -3);
-    const {Model, ModelTC} = require('../models/'+object);
+    const {ModelTC} = require('../models/'+object);
 
-    var resolvers = [];
+    const resolvers = [];
     if (ModelTC.needsAuthorized) {
       resolvers.push(authMiddleware);
     }
 
-    var queries = {};
-    var query_sets = [
+    const queries = {};
+    const query_sets = [
       {call: 'ById', resolver: 'findById'},
       {call: 'ByIds', resolver: 'findByIds'},
       {call: 'One', resolver: 'findOne'},
@@ -58,8 +56,8 @@ fs
       resolvers.push(authMiddleware);
     }
 
-    var mutations = {};
-    var mutation_sets = [
+    const mutations = {};
+    const mutation_sets = [
       {call: 'CreateOne', resolver: 'createOne'},
       {call: 'CreateMany', resolver: 'createMany'},
       {call: 'UpdateById', resolver: 'updateById'},

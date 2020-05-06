@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
   name: {
     type: String,
     required: true
@@ -54,7 +56,7 @@ schema.index({shop_id: 1, name: 1}, {unique: true});
 module.exports = {};
 module.exports.Model = mongoose.model('Customer', schema);
 
-var ModelTC = new composeWithMongoose(module.exports.Model);
+const ModelTC = new composeWithMongoose(module.exports.Model);
 
 const shop = require('./shop');
 ModelTC.addRelation('shop', {
@@ -75,8 +77,8 @@ ModelTC.addResolver({
     password: 'String!'
   },
   type: ModelTC.getResolver('updateById').getType(),
-  resolve: async({args, context}) => {
-    let customer = await module.exports.Model.findOne({ name: args.identity });
+  resolve: async ({args, context}) => {
+    const customer = await module.exports.Model.findOne({ name: args.identity });
 
     if(!customer) {
       throw new Error('User/Password combination is wrong.');
@@ -86,7 +88,7 @@ ModelTC.addResolver({
     if(!isEqual) {
       throw new Error('User/Password combination is wrong.');
     }
-    const token = jwt.sign({user_id: user._id}, 'moveSecretToENV', {
+    const token = jwt.sign({customer_id: customer._id}, 'moveSecretToENV', {
       expiresIn: '8h'
     });
 

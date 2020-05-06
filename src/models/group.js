@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongoose;
 const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
   name: {
     type: String,
     required: true
@@ -36,7 +36,7 @@ schema.index({account_id: 1, name: 1}, {unique: true});
 module.exports = {};
 module.exports.Model = mongoose.model('Group', schema);
 
-var ModelTC = new composeWithMongoose(module.exports.Model);
+const ModelTC = new composeWithMongoose(module.exports.Model);
 
 const account = require('./account');
 ModelTC.addRelation('account', {

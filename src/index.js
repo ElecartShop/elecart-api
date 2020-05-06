@@ -2,17 +2,15 @@
 
 const express = require("express");
 const mongoose = require('./config/mongoose');
-const graphqlHTTP = require("express-graphql");
 const { ApolloServer } = require('apollo-server-express');
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const db = mongoose();
+mongoose();
 const app = express();
 
 const middleware_log = require('./middleware/log');
 const middleware_auth= require('./middleware/auth');
-const Call = require('./models/call').Model;
 
 app.use('*', cors());
 app.use(bodyParser.json());
@@ -24,7 +22,7 @@ const schema = require('./graphql/index');
 const apollo = new ApolloServer({
   schema: schema,
   playground: true,
-  context: async ({ req, connection, res }) => {
+  context: ({ req, connection, res }) => {
     return {
       req: req,
       res: res
