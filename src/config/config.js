@@ -4,5 +4,11 @@ module.exports = {
         app: {
             name: 'elecart-api'
         }
+    },
+    testing: {
+        db: 'mongodb://localhost/elecart',
+        app: {
+            name: 'elecart-api'
+        }
     }
 };

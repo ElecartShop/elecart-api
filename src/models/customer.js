@@ -54,7 +54,7 @@ const schema = new Schema({
 });
 
 schema.pre('save', function(next) {
-  var customer = this;
+  const customer = this;
 
   if (!customer.isModified('password')) {
     return next();

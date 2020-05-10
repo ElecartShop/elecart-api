@@ -1,3 +1,13 @@
+process.env.NODE_ENV = 'testing';
+const mongoose = require('../src/config/mongoose');
+let db;
+
+before(function(done) {
+  db = mongoose(function() {
+    done();
+  });
+});
+
 describe('Unit Tests', () => {
   delete require.cache[require.resolve('./unit/county')];
   require('./unit/county');
@@ -19,4 +29,10 @@ describe('Unit Tests', () => {
 
   delete require.cache[require.resolve('./unit/user')];
   require('./unit/user');
+});
+
+after(function(done) {
+  db.disconnect().then(function() {
+    done();
+  });
 });

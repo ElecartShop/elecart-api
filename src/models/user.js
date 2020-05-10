@@ -39,13 +39,13 @@ const schema = new Schema({
 });
 
 schema.pre('save', function(next) {
-  var user = this;
+  const user = this;
 
   if (!user.isModified('password')) {
     return next();
   }
 
-  bcrypt.genSalt("USEENVSALT", function(err, salt) { // TODO: Change this salt
+  bcrypt.genSalt(10, function(err, salt) { // TODO: Change this salt
     if (err) return next(err);
 
     bcrypt.hash(user.password, salt, function(err, hash) {
