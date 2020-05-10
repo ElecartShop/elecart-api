@@ -12,7 +12,8 @@ const schema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
   email: {
     type: String,
@@ -32,7 +33,8 @@ const schema = new Schema({
   },
   deleted: {
     type: Date,
-    required: false
+    required: false,
+    select: false
   }
 });
 
@@ -68,13 +70,15 @@ module.exports.Model = Model;
 
 const ModelTC = new composeWithMongoose(Model);
 
+ModelTC.removeField('password');
+
 const account = require('./account');
 ModelTC.addRelation('account', {
   resolver: () => account.ModelTC.getResolver('findOne'),
   prepareArgs: {
     filter: (source) => ({ _id: source.account_id }),
     skip: null,
-    sort: null,
+    sort: null
   },
   projection: { account_id: true }
 });
@@ -101,6 +105,7 @@ ModelTC.addResolver({
       throw new Error('User/Password combination is wrong.');
     }
 
+    // TODO: Use compare function instead
     const isEqual = await bcrypt.compare(args.password, user.password);
     if(!isEqual) {
       throw new Error('User/Password combination is wrong.');

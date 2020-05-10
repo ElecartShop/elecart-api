@@ -4,6 +4,7 @@ const supertest = require('supertest');
 const expect = chai.expect;
 const url = 'http://localhost:4000';
 const request = supertest(url);
+const model = require('../src/models/user')
 chai.should();
 
 describe('User Model', () => {
