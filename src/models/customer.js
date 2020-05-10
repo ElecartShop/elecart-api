@@ -7,7 +7,8 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    lowercase: true
   },
   shop_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -29,7 +30,8 @@ const schema = new Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    lowercase: true
   },
   phone: {
     type: String
