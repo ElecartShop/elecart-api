@@ -14,7 +14,7 @@ const schema = new Schema({
     ref: 'Shop',
     required: true
   },
-  password: { // TODO: Automatically hash this going in
+  password: {
     type: String,
     required: true
   },
@@ -50,6 +50,32 @@ const schema = new Schema({
     required: false
   }
 });
+
+schema.pre('save', function(next) {
+  var customer = this;
+
+  if (!customer.isModified('password')) {
+    return next();
+  }
+
+  bcrypt.genSalt("USEENVSALT", function(err, salt) { // TODO: Change this salt
+    if (err) return next(err);
+
+    bcrypt.hash(customer.password, salt, function(err, hash) {
+      if (err) return next(err);
+
+      customer.password = hash;
+      next();
+    });
+  });
+});
+
+schema.methods.comparePassword = function(candidatePassword, callback) {
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+    if (err) return callback(err);
+    callback(null, isMatch);
+  });
+};
 
 schema.index({shop_id: 1, name: 1}, {unique: true});
 
