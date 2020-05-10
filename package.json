@@ -13,7 +13,7 @@
     "postinstall": "rm -rf dist && yarn run build",
     "lint": "yarn prettier --write --check --config ./.prettierrc \"**/*.js\" && eslint --fix ./src",
     "release": "release-it patch --no-npm.publish",
-    "test": "npx nyc mocha tests/*.test.js"
+    "test": "npx nyc --reporter=html mocha tests/*.test.js"
   },
   "repository": {
     "type": "git",
