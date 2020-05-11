@@ -3,6 +3,10 @@ const composeWithMongoose = require('graphql-compose-mongoose').composeWithMongo
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
   shop_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Shop',
@@ -13,14 +17,10 @@ const schema = new Schema({
     ref: 'Attribute',
     required: true
   },
-  product_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-    required: true
-  },
-  value: {
-    type: String,
-    required: true
+  show: {
+    type: Boolean,
+    required: true,
+    default: true
   },
   created: {
     type: Date,
@@ -34,14 +34,12 @@ const schema = new Schema({
     type: Date,
     required: false
   }
-}, {
-  collection: 'productAttributes'
 });
 
-schema.index({attribute_id: 1, product_id: 1}, {unique: true});
+schema.index({shop_id: 1, attribute_id: 1, name: 1}, {unique: true});
 
 module.exports = {};
-module.exports.Model = mongoose.model('ProductAttributes', schema);
+module.exports.Model = mongoose.model('AttributeValues', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 
@@ -59,29 +57,17 @@ if (shop.ModelTC) { // So we don't go in to a loop
 }
 
 const attribute = require('./attribute');
-ModelTC.addRelation('attribute', {
-  resolver: () => attribute.ModelTC.getResolver('findOne'),
-  prepareArgs: {
-    filter: (source) => ({ _id: source.attribute_id }),
-    skip: null,
-    sort: null,
-  },
-  projection: { attribute_id: true }
-});
-
-const product = require('./product');
-if (product.ModelTC) {
-  ModelTC.addRelation('product', {
-    resolver: () => product.ModelTC.getResolver('findOne'),
+if (attribute.ModelTC) { // So we don't go in to a loop
+  ModelTC.addRelation('attribute', {
+    resolver: () => attribute.ModelTC.getResolver('findOne'),
     prepareArgs: {
-      filter: (source) => ({ _id: source.product_id }),
+      filter: (source) => ({ _id: source.attribute_id }),
       skip: null,
       sort: null,
     },
-    projection: { product_id: true }
+    projection: { attribute_id: true }
   });
 }
-
 
 ModelTC.viewableOnly = true;
 

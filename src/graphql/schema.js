@@ -1,8 +1,5 @@
-// TODO: Product tags
-// TODO: Customer tags
-// TODO: Product variants
-// TODO: Category and Product SEO
 // TODO: Figure out what the connection query is and learn how to test
+// TODO: Add in indexes
 
 const grapqlCompose = require('graphql-compose');
 const schemaComposer = new grapqlCompose.SchemaComposer();

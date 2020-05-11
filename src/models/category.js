@@ -17,9 +17,23 @@ const schema = new Schema({
     ref: 'Category',
     required: true
   },
+  tags: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'CategoryTag',
+    required: true
+  }],
   url: {
     type: String
   },
+  metaDescription: {
+    type: String
+  },
+  metaKeywords: [{
+    name: {
+      type: String,
+      required: true
+    }
+  }],
   product_ids: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Product',

@@ -12,11 +12,6 @@ const schema = new Schema({
     ref: 'Shop',
     required: true
   },
-  show: {
-    type: Boolean,
-    required: true,
-    default: true
-  },
   created: {
     type: Date,
     default: Date.now
@@ -29,12 +24,12 @@ const schema = new Schema({
     type: Date,
     required: false
   }
+}, {
+  collection: 'productTags'
 });
 
-schema.index({shop_id: 1, name: 1}, {unique: true});
-
 module.exports = {};
-module.exports.Model = mongoose.model('Attributes', schema);
+module.exports.Model = mongoose.model('ProductTag', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 

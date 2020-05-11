@@ -15,15 +15,56 @@ const schema = new Schema({
   url: {
     type: String
   },
+  metaDescription: {
+    type: String
+  },
+  metaKeywords: [{
+    name: {
+      type: String,
+      required: true
+    }
+  }],
+  tags: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'ProductTag',
+    required: true
+  }],
   sku: {
     type: String
   },
   stock: {
     type: Number,
   },
+  price: {
+    type: Number,
+    required: true
+  },
   summery: {
     type: String
   },
+  attributes: [{
+    attribute_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Attribute',
+    },
+    attribute_value_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'AttributeValue',
+    }
+  }],
+  variants: [{
+    name: {
+      type: String,
+      required: true
+    },
+    imageUrl: {
+      type: String
+    },
+    price: {
+      type: Number,
+      required: true
+    }
+  }],
   weight: {
     type: Number
   },
@@ -74,18 +115,9 @@ ModelTC.addRelation('productImages', {
   projection: { productImages: true }
 });
 
-const productAttribute = require('./productAttribute');
-ModelTC.addRelation('productAttributes', {
-  resolver: () => productAttribute.ModelTC.getResolver('findMany'),
-  prepareArgs: {
-    filter: (source) => ({ product_id: source.id }),
-    skip: null,
-    sort: null,
-  },
-  projection: { productAttributes: true }
-});
+// TODO: Add attributes relation
 
-//TODO: Find out how to automatically pass shop_id from shop and category
+// TODO: Find out how to automatically pass shop_id from shop and category
 ModelTC.addResolver({
   name: 'findMany',
   type: [ModelTC],
