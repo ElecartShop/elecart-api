@@ -4,7 +4,7 @@ const supertest = require('supertest');
 const expect = chai.expect;
 const url = 'http://localhost:4000';
 const request = supertest(url);
-const { Model } = require('../../src/models/user')
+const { Model } = require('../../../src/models/user')
 chai.should();
 
 describe('User Model', () => {
@@ -101,17 +101,14 @@ describe('User Model', () => {
       });
   });
 
-  // TODO: it should create many users
+  // TODO: it should not create many users
 
-  it('should return an user', (done) => {
+  it('should not return an user', (done) => {
     request.post('/')
       .send({ query: '{ userOne { _id name } }' })
-      .expect(200)
+      .expect(400)
       .end((err, res) => {
         if (err) return done(err);
-
-        res.body.data.userOne.should.have.property('_id');
-        res.body.data.userOne.should.have.property('name');
 
         done();
       });
@@ -128,10 +125,10 @@ describe('User Model', () => {
       });
   });
 
-  it('should returns all users', (done) => {
+  it('should not returns all users', (done) => {
     request.post('/')
       .send({ query: '{ userMany { _id name } }' })
-      .expect(200)
+      .expect(400)
       .end((err, res) => {
         if (err) return done(err);
 
@@ -142,14 +139,9 @@ describe('User Model', () => {
   it('should return an user by ID', (done) => {
     request.post('/')
       .send({ query: '{ userById(id: "'+user_id+'") { _id name } }' })
-      .expect(200)
+      .expect(400)
       .end((err, res) => {
         if (err) return done(err);
-
-        res.body.data.userById.should.have.property('_id');
-        res.body.data.userById._id.should.equal(user_id);
-        res.body.data.userById.should.have.property('name');
-        res.body.data.userById.name.should.equal('test');
 
         done();
       });
@@ -159,12 +151,11 @@ describe('User Model', () => {
   // TODO: it should not update many users
   // TODO: it should not update an user by ID
   // TODO: it should login an user
-  // TODO: it should update an user
+  // TODO: it should not update an user
   // TODO: it should not update an user that is not theirs
   // TODO: it should not count users
-  // TODO: it should pagination users
-  // TODO: it should pagination users differently
-  // TODO: children unit tests of user
+  // TODO: it should not pagination users
+  // TODO: it should not pagination users differently
   // TODO: it should not remove an user
   // TODO: it should not remove many users
   // TODO: it should not remove an user by ID

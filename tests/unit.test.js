@@ -9,26 +9,24 @@ before(function(done) {
 });
 
 describe('Unit Tests', () => {
-  delete require.cache[require.resolve('./unit/county')];
-  require('./unit/county');
+  var roles = ['admin', 'user', 'customer', 'anonymous'];
+  var models = [
+    'account', 'admin', 'attribute', 'attributeValue', 'call', 'card', 'cart',
+    'category', 'categoryTag', 'county', 'countyTax', 'coupon', 'customer',
+    'group', 'order', 'processor', 'product', 'productImage', 'productTag',
+    'refund', 'shipper', 'shop', 'shopProcessor', 'shopShipper', 'state',
+    'stateTax', 'user', 'visitor'
+  ];
 
-  delete require.cache[require.resolve('./unit/countyTax')];
-  require('./unit/countyTax');
-
-  delete require.cache[require.resolve('./unit/state')];
-  require('./unit/state');
-
-  delete require.cache[require.resolve('./unit/stateTax')];
-  require('./unit/stateTax');
-
-  delete require.cache[require.resolve('./unit/processor')];
-  require('./unit/processor');
-
-  delete require.cache[require.resolve('./unit/shipper')];
-  require('./unit/shipper');
-
-  delete require.cache[require.resolve('./unit/user')];
-  require('./unit/user');
+  roles.forEach((role) => {
+    describe('As '+role.charAt(0).toUpperCase()+role.slice(1), () => {
+      models.forEach((model) => {
+        const path = './unit/'+role+'/'+model;
+        delete require.cache[require.resolve(path)];
+        require(path);
+      });
+    });
+  });
 });
 
 after(function(done) {
