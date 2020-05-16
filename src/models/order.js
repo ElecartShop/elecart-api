@@ -117,6 +117,27 @@ module.exports.Model = mongoose.model('Order', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 
+ModelTC.queries = [
+  {call: 'ById', resolver: 'findById', access: 'customer'},
+  {call: 'ByIds', resolver: 'findByIds', access: 'customer'},
+  {call: 'One', resolver: 'findOne', access: 'customer'},
+  {call: 'Many', resolver: 'findMany', access: 'customer'},
+  {call: 'Count', resolver: 'count', access: 'customer'},
+  {call: 'Connection', resolver: 'connection', access: 'customer'},
+  {call: 'Pagination', resolver: 'pagination', access: 'customer'}
+];
+
+ModelTC.mutations = [
+  {call: 'CreateOne', resolver: 'createOne', access: 'customer'},
+  {call: 'CreateMany', resolver: 'createMany', access: 'user'},
+  {call: 'UpdateById', resolver: 'updateById', access: 'customer'},
+  {call: 'UpdateOne', resolver: 'updateOne', access: 'customer'},
+  {call: 'UpdateMany', resolver: 'updateMany', access: 'user'},
+  {call: 'RemoveById', resolver: 'removeById', access: 'user'},
+  {call: 'RemoveOne', resolver: 'removeOne', access: 'user'},
+  {call: 'RemoveMany', resolver: 'removeMany', access: 'user'}
+];
+
 const shop = require('./shop');
 ModelTC.addRelation('shop', {
   resolver: () => shop.ModelTC.getResolver('findOne'),

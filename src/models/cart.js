@@ -38,6 +38,27 @@ module.exports.Model = mongoose.model('Cart', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 
+ModelTC.queries = [
+  {call: 'ById', resolver: 'findById', access: 'anonymous'},
+  {call: 'ByIds', resolver: 'findByIds', access: 'anonymous'},
+  {call: 'One', resolver: 'findOne', access: 'anonymous'},
+  {call: 'Many', resolver: 'findMany', access: 'anonymous'},
+  {call: 'Count', resolver: 'count', access: 'anonymous'},
+  {call: 'Connection', resolver: 'connection', access: 'anonymous'},
+  {call: 'Pagination', resolver: 'pagination', access: 'anonymous'}
+];
+
+ModelTC.mutations = [
+  {call: 'CreateOne', resolver: 'createOne', access: 'anonymous'},
+  {call: 'CreateMany', resolver: 'createMany', access: 'admin'},
+  {call: 'UpdateById', resolver: 'updateById', access: 'anonymous'},
+  {call: 'UpdateOne', resolver: 'updateOne', access: 'anonymous'},
+  {call: 'UpdateMany', resolver: 'updateMany', access: 'admin'},
+  {call: 'RemoveById', resolver: 'removeById', access: 'anonymous'},
+  {call: 'RemoveOne', resolver: 'removeOne', access: 'anonymous'},
+  {call: 'RemoveMany', resolver: 'removeMany', access: 'admin'}
+];
+
 const shop = require('./shop');
 ModelTC.addRelation('shop', {
   resolver: () => shop.ModelTC.getResolver('findOne'),

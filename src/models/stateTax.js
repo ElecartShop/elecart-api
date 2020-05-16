@@ -36,6 +36,27 @@ module.exports.Model = mongoose.model('StateTax', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 
+ModelTC.queries = [
+  {call: 'ById', resolver: 'findById', access: 'anonymous'},
+  {call: 'ByIds', resolver: 'findByIds', access: 'anonymous'},
+  {call: 'One', resolver: 'findOne', access: 'anonymous'},
+  {call: 'Many', resolver: 'findMany', access: 'anonymous'},
+  {call: 'Count', resolver: 'count', access: 'anonymous'},
+  {call: 'Connection', resolver: 'connection', access: 'anonymous'},
+  {call: 'Pagination', resolver: 'pagination', access: 'anonymous'}
+];
+
+ModelTC.mutations = [
+  {call: 'CreateOne', resolver: 'createOne', access: 'admin'},
+  {call: 'CreateMany', resolver: 'createMany', access: 'admin'},
+  {call: 'UpdateById', resolver: 'updateById', access: 'admin'},
+  {call: 'UpdateOne', resolver: 'updateOne', access: 'admin'},
+  {call: 'UpdateMany', resolver: 'updateMany', access: 'admin'},
+  {call: 'RemoveById', resolver: 'removeById', access: 'admin'},
+  {call: 'RemoveOne', resolver: 'removeOne', access: 'admin'},
+  {call: 'RemoveMany', resolver: 'removeMany', access: 'admin'}
+];
+
 const state = require('./state');
 ModelTC.addRelation('state', {
   resolver: () => state.ModelTC.getResolver('findOne'),
@@ -46,7 +67,5 @@ ModelTC.addRelation('state', {
   },
   projection: { state_id: true }
 });
-
-ModelTC.viewableOnly = true;
 
 module.exports.ModelTC = ModelTC;

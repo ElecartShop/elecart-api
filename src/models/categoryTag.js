@@ -33,6 +33,27 @@ module.exports.Model = mongoose.model('CategoryTag', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 
+ModelTC.queries = [
+  {call: 'ById', resolver: 'findById', access: 'user'},
+  {call: 'ByIds', resolver: 'findByIds', access: 'user'},
+  {call: 'One', resolver: 'findOne', access: 'user'},
+  {call: 'Many', resolver: 'findMany', access: 'user'},
+  {call: 'Count', resolver: 'count', access: 'user'},
+  {call: 'Connection', resolver: 'connection', access: 'user'},
+  {call: 'Pagination', resolver: 'pagination', access: 'user'}
+];
+
+ModelTC.mutations = [
+  {call: 'CreateOne', resolver: 'createOne', access: 'user'},
+  {call: 'CreateMany', resolver: 'createMany', access: 'user'},
+  {call: 'UpdateById', resolver: 'updateById', access: 'user'},
+  {call: 'UpdateOne', resolver: 'updateOne', access: 'user'},
+  {call: 'UpdateMany', resolver: 'updateMany', access: 'user'},
+  {call: 'RemoveById', resolver: 'removeById', access: 'user'},
+  {call: 'RemoveOne', resolver: 'removeOne', access: 'user'},
+  {call: 'RemoveMany', resolver: 'removeMany', access: 'user'}
+];
+
 const shop = require('./shop');
 if (shop.ModelTC) { // So we don't go in to a loop
   ModelTC.addRelation('shop', {
@@ -45,7 +66,5 @@ if (shop.ModelTC) { // So we don't go in to a loop
     projection: { shop_id: true }
   });
 }
-
-ModelTC.viewableOnly = true;
 
 module.exports.ModelTC = ModelTC;

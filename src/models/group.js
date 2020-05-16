@@ -38,6 +38,27 @@ module.exports.Model = mongoose.model('Group', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 
+ModelTC.queries = [
+  {call: 'ById', resolver: 'findById', access: 'user'},
+  {call: 'ByIds', resolver: 'findByIds', access: 'user'},
+  {call: 'One', resolver: 'findOne', access: 'user'},
+  {call: 'Many', resolver: 'findMany', access: 'user'},
+  {call: 'Count', resolver: 'count', access: 'user'},
+  {call: 'Connection', resolver: 'connection', access: 'user'},
+  {call: 'Pagination', resolver: 'pagination', access: 'user'}
+];
+
+ModelTC.mutations = [
+  {call: 'CreateOne', resolver: 'createOne', access: 'user'},
+  {call: 'CreateMany', resolver: 'createMany', access: 'user'},
+  {call: 'UpdateById', resolver: 'updateById', access: 'user'},
+  {call: 'UpdateOne', resolver: 'updateOne', access: 'user'},
+  {call: 'UpdateMany', resolver: 'updateMany', access: 'user'},
+  {call: 'RemoveById', resolver: 'removeById', access: 'user'},
+  {call: 'RemoveOne', resolver: 'removeOne', access: 'user'},
+  {call: 'RemoveMany', resolver: 'removeMany', access: 'user'}
+];
+
 const account = require('./account');
 ModelTC.addRelation('account', {
   resolver: () => account.ModelTC.getResolver('findOne'),
@@ -70,7 +91,5 @@ ModelTC.addRelation('shops', {
   },
   projection: { shops: true }
 });*/
-
-ModelTC.needsAuthorized = true;
 
 module.exports.ModelTC = ModelTC;

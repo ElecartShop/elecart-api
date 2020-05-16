@@ -72,6 +72,27 @@ module.exports.Model = Model;
 
 const ModelTC = new composeWithMongoose(Model);
 
+ModelTC.queries = [
+  {call: 'ById', resolver: 'findById', access: 'user'},
+  {call: 'ByIds', resolver: 'findByIds', access: 'user'},
+  {call: 'One', resolver: 'findOne', access: 'user'},
+  {call: 'Many', resolver: 'findMany', access: 'user'},
+  {call: 'Count', resolver: 'count', access: 'user'},
+  {call: 'Connection', resolver: 'connection', access: 'user'},
+  {call: 'Pagination', resolver: 'pagination', access: 'user'}
+];
+
+ModelTC.mutations = [
+  {call: 'CreateOne', resolver: 'createOne', access: 'anonymous'},
+  {call: 'CreateMany', resolver: 'createMany', access: 'admin'},
+  {call: 'UpdateById', resolver: 'updateById', access: 'user'},
+  {call: 'UpdateOne', resolver: 'updateOne', access: 'user'},
+  {call: 'UpdateMany', resolver: 'updateMany', access: 'admin'},
+  {call: 'RemoveById', resolver: 'removeById', access: 'admin'},
+  {call: 'RemoveOne', resolver: 'removeOne', access: 'admin'},
+  {call: 'RemoveMany', resolver: 'removeMany', access: 'admin'}
+];
+
 ModelTC.removeField('password');
 
 const account = require('./account');
@@ -125,7 +146,5 @@ ModelTC.addResolver({
     };
   }
 });
-
-ModelTC.createableOnly = true;
 
 module.exports.ModelTC = ModelTC;

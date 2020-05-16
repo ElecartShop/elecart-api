@@ -34,6 +34,27 @@ module.exports.Model = mongoose.model('Refund', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 
+ModelTC.queries = [
+  {call: 'ById', resolver: 'findById', access: 'customer'},
+  {call: 'ByIds', resolver: 'findByIds', access: 'customer'},
+  {call: 'One', resolver: 'findOne', access: 'customer'},
+  {call: 'Many', resolver: 'findMany', access: 'customer'},
+  {call: 'Count', resolver: 'count', access: 'customer'},
+  {call: 'Connection', resolver: 'connection', access: 'customer'},
+  {call: 'Pagination', resolver: 'pagination', access: 'customer'}
+];
+
+ModelTC.mutations = [
+  {call: 'CreateOne', resolver: 'createOne', access: 'user'},
+  {call: 'CreateMany', resolver: 'createMany', access: 'user'},
+  {call: 'UpdateById', resolver: 'updateById', access: 'user'},
+  {call: 'UpdateOne', resolver: 'updateOne', access: 'user'},
+  {call: 'UpdateMany', resolver: 'updateMany', access: 'user'},
+  {call: 'RemoveById', resolver: 'removeById', access: 'admin'},
+  {call: 'RemoveOne', resolver: 'removeOne', access: 'admin'},
+  {call: 'RemoveMany', resolver: 'removeMany', access: 'admin'}
+];
+
 const order = require('./order');
 ModelTC.addRelation('order', {
   resolver: () => order.ModelTC.getResolver('findOne'),
@@ -44,7 +65,5 @@ ModelTC.addRelation('order', {
   },
   projection: { order_id: true }
 });
-
-ModelTC.needsAuthorized = true;
 
 module.exports.ModelTC = ModelTC;

@@ -88,6 +88,27 @@ module.exports.Model = mongoose.model('Customer', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 
+ModelTC.queries = [
+  {call: 'ById', resolver: 'findById', access: 'anonymous'},
+  {call: 'ByIds', resolver: 'findByIds', access: 'user'},
+  {call: 'One', resolver: 'findOne', access: 'anonymous'},
+  {call: 'Many', resolver: 'findMany', access: 'user'},
+  {call: 'Count', resolver: 'count', access: 'user'},
+  {call: 'Connection', resolver: 'connection', access: 'user'},
+  {call: 'Pagination', resolver: 'pagination', access: 'user'}
+];
+
+ModelTC.mutations = [
+  {call: 'CreateOne', resolver: 'createOne', access: 'anonymous'},
+  {call: 'CreateMany', resolver: 'createMany', access: 'admin'},
+  {call: 'UpdateById', resolver: 'updateById', access: 'anonymous'},
+  {call: 'UpdateOne', resolver: 'updateOne', access: 'user'},
+  {call: 'UpdateMany', resolver: 'updateMany', access: 'admin'},
+  {call: 'RemoveById', resolver: 'removeById', access: 'user'},
+  {call: 'RemoveOne', resolver: 'removeOne', access: 'user'},
+  {call: 'RemoveMany', resolver: 'removeMany', access: 'admin'}
+];
+
 ModelTC.removeField('password');
 
 const shop = require('./shop');

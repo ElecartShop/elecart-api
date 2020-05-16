@@ -1,5 +1,7 @@
 // TODO: Figure out what the connection query is and learn how to test
 // TODO: Add in indexes
+// TODO: Add customer tags
+// TODO: Go through models and be restrictive with data returns
 
 const grapqlCompose = require('graphql-compose');
 const schemaComposer = new grapqlCompose.SchemaComposer();
@@ -9,8 +11,22 @@ const path = require('path');
 
 const basename = path.basename(__filename);
 
-function authMiddleware(resolve, source, args, context, info) {
-  if (context.req.authorized) {
+function customer_access(resolve, source, args, context, info) {
+  if (context.req.customer_authorized || context.req.user_authorized || context.req.admin_authorized) {
+    return resolve(source, args, context, info);
+  }
+
+  throw new Error('You must be authorized.');
+}
+function user_access(resolve, source, args, context, info) {
+  if (context.req.user_authorized || context.req.admin_authorized) {
+    return resolve(source, args, context, info);
+  }
+
+  throw new Error('You must be authorized.');
+}
+function admin_access(resolve, source, args, context, info) {
+  if (context.req.admin_authorized) {
     return resolve(source, args, context, info);
   }
 
@@ -24,23 +40,23 @@ fs
     const object = file.slice(0, -3);
     const {ModelTC} = require('../models/'+object);
 
-    const resolvers = [];
-    if (ModelTC.needsAuthorized) {
-      resolvers.push(authMiddleware);
-    }
-
     const queries = {};
-    const query_sets = [
-      {call: 'ById', resolver: 'findById'},
-      {call: 'ByIds', resolver: 'findByIds'},
-      {call: 'One', resolver: 'findOne'},
-      {call: 'Many', resolver: 'findMany'},
-      {call: 'Count', resolver: 'count'},
-      {call: 'Connection', resolver: 'connection'},
-      {call: 'Pagination', resolver: 'pagination'}
-    ];
+    ModelTC.queries.forEach((query) => {
+      const resolvers = [];
+      switch (query.access) {
+        case 'anonymous':
+        break;
+        case 'customer':
+          resolvers.push(customer_access);
+        break;
+        case 'user':
+          resolvers.push(user_access);
+        break;
+        case 'admin':
+          resolvers.push(admin_access);
+        break;
+      }
 
-    query_sets.forEach((query) => {
       queries[object+query.call] = ModelTC.getResolver(query.resolver, resolvers);
     });
 
@@ -48,29 +64,34 @@ fs
       queries[object+'ByURL'] = ModelTC.getResolver('findByURL');
     }
 
-    if (ModelTC.viewableOnly && !ModelTC.needsAuthorized) {
-      resolvers.push(authMiddleware);
-    }
-
     const mutations = {};
-    const mutation_sets = [
-      {call: 'CreateOne', resolver: 'createOne'},
-      {call: 'CreateMany', resolver: 'createMany'},
-      {call: 'UpdateById', resolver: 'updateById'},
-      {call: 'UpdateOne', resolver: 'updateOne'},
-      {call: 'UpdateMany', resolver: 'updateMany'},
-      {call: 'RemoveById', resolver: 'removeById'},
-      {call: 'RemoveOne', resolver: 'removeOne'},
-      {call: 'RemoveMany', resolver: 'removeMany'}
-    ];
+    ModelTC.mutations.forEach((mutation) => {
+      const resolvers = [];
+      switch (mutation.access) {
+        case 'anonymous':
+        break;
+        case 'customer':
+          resolvers.push(customer_access);
+        break;
+        case 'user':
+          resolvers.push(user_access);
+        break;
+        case 'admin':
+          resolvers.push(admin_access);
+        break;
+      }
 
-    mutation_sets.forEach((mutation) => {
       mutations[object+mutation.call] = ModelTC.getResolver(mutation.resolver, resolvers);
     });
 
     schemaComposer.Query.addFields(queries);
     schemaComposer.Mutation.addFields(mutations);
 
+    if (object === 'admin') {
+      schemaComposer.Mutation.addFields({
+        loginAdmin: ModelTC.getResolver('loginAdmin'),
+      });
+    }
     if (object === 'user') {
       schemaComposer.Mutation.addFields({
         loginUser: ModelTC.getResolver('loginUser'),

@@ -32,6 +32,27 @@ module.exports.Model = mongoose.model('Visitor', schema);
 
 const ModelTC = new composeWithMongoose(module.exports.Model);
 
+ModelTC.queries = [
+  {call: 'ById', resolver: 'findById', access: 'user'},
+  {call: 'ByIds', resolver: 'findByIds', access: 'user'},
+  {call: 'One', resolver: 'findOne', access: 'user'},
+  {call: 'Many', resolver: 'findMany', access: 'user'},
+  {call: 'Count', resolver: 'count', access: 'user'},
+  {call: 'Connection', resolver: 'connection', access: 'user'},
+  {call: 'Pagination', resolver: 'pagination', access: 'user'}
+];
+
+ModelTC.mutations = [
+  {call: 'CreateOne', resolver: 'createOne', access: 'admin'},
+  {call: 'CreateMany', resolver: 'createMany', access: 'admin'},
+  {call: 'UpdateById', resolver: 'updateById', access: 'admin'},
+  {call: 'UpdateOne', resolver: 'updateOne', access: 'admin'},
+  {call: 'UpdateMany', resolver: 'updateMany', access: 'admin'},
+  {call: 'RemoveById', resolver: 'removeById', access: 'admin'},
+  {call: 'RemoveOne', resolver: 'removeOne', access: 'admin'},
+  {call: 'RemoveMany', resolver: 'removeMany', access: 'admin'}
+];
+
 const shop = require('./shop');
 ModelTC.addRelation('shop', {
   resolver: () => shop.ModelTC.getResolver('findOne'),
